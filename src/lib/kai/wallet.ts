@@ -31,9 +31,53 @@ declare global {
   }
 }
 
+let injectedOrWc: EthereumProvider | undefined;
+
 export function getEthereum(): EthereumProvider | undefined {
   if (typeof window === "undefined") return undefined;
-  return window.ethereum;
+  return injectedOrWc ?? window.ethereum;
+}
+
+export function setEthereumProvider(p: EthereumProvider | undefined) {
+  injectedOrWc = p;
+}
+
+/** wagmi docs sample — replace with Reown cloud ID if QR is rate-limited. */
+export const WC_PROJECT_ID =
+  (import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string | undefined)?.trim() ||
+  "3fcc6bba6f1de962d911bb5b5c3dba68";
+
+export async function connectWalletConnect(): Promise<Address> {
+  const { EthereumProvider } = await import("@walletconnect/ethereum-provider");
+  const existing = injectedOrWc as { disconnect?: () => Promise<void> } | undefined;
+  if (existing?.disconnect) {
+    try {
+      await existing.disconnect();
+    } catch {
+      /* ignore */
+    }
+  }
+  const provider = await EthereumProvider.init({
+    projectId: WC_PROJECT_ID,
+    optionalChains: [ROBINHOOD_CHAIN_ID, 1, 8453, 42161, 56],
+    showQrModal: true,
+    metadata: {
+      name: "KindredHQ KAI",
+      description: "KAI presale on Robinhood Chain",
+      url: typeof window !== "undefined" ? window.location.origin : "https://presale.kindredhq.io",
+      icons: ["https://presale.kindredhq.io/favicon.svg"],
+    },
+  });
+  await provider.connect();
+  injectedOrWc = provider as unknown as EthereumProvider;
+  const accs = provider.accounts;
+  if (!accs?.[0]) throw new Error("NO_ACCOUNT");
+  try {
+    await ensureChain(provider as unknown as EthereumProvider);
+  } catch {
+    /* phone wallet may not support addChain; buy will switch later */
+  }
+  return accs[0] as Address;
 }
 
 export const publicClient = createPublicClient({

@@ -986,11 +986,21 @@ export const FUTURE_NAV: Record<Lang, string> = {
   ru: "Будущее",
 };
 
-export const MM_DAPP = "https://metamask.app.link/dapp/presale.kindredhq.io";
+export const QR_CONNECT: Record<Lang, string> = {
+  tr: "QR ile bağla",
+  en: "Connect with QR",
+  de: "Per QR verbinden",
+  es: "Conectar con QR",
+  fr: "Connecter par QR",
+  it: "Collega con QR",
+  pt: "Conectar com QR",
+  ru: "Подключить по QR",
+};
+
 
 export const MOBILE_WALLET: Record<Lang, { hint: string; open: string }> = {
   tr: {
-    hint: "iPhone/Android tarayıcısında cüzdan yok. MetaMask uygulamasını aç, alttan tarayıcıya gir, bu adresi yapıştır.",
+    hint: "Safari’de uzantı yok. QR ile bağla: MetaMask uygulaması karekodu okur. Ya da uygulamadaki tarayıcıdan siteyi aç.",
     open: "MetaMask uygulamasında aç",
   },
   en: {

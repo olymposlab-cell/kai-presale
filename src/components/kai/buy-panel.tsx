@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Address } from "viem";
 import { Button } from "@/components/ui/button";
-import { MM_DAPP, MOBILE_WALLET, copy, localeOf, type Lang } from "@/lib/kai/copy";
+import { MOBILE_WALLET, QR_CONNECT, copy, localeOf, type Lang } from "@/lib/kai/copy";
 import {
   MIN_USD,
   ROUNDS,
@@ -23,6 +23,7 @@ import {
   approveUsdg,
   buyKai,
   connectWallet,
+  connectWalletConnect,
   ensureChainId,
   fmtToken,
   fmtUsdg,
@@ -147,11 +148,30 @@ export function BuyPanel({ lang }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asset, account]);
 
+  async function onConnectQr() {
+    setErr(null);
+    setBusy(true);
+    try {
+      const addr = await connectWalletConnect();
+      setAccount(addr);
+      await refreshAccount(addr);
+    } catch (e) {
+      const raw = e instanceof Error ? e.message : "";
+      if (raw.includes("User rejected") || raw.includes("denied") || raw === "Connection request reset") {
+        setErr(t.txFail);
+      } else {
+        setErr(raw ? `${t.txFail}: ${raw.slice(0, 100)}` : t.txFail);
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function onConnect() {
     setErr(null);
     if (!getEthereum()) {
       if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
-        window.location.href = MM_DAPP;
+        void onConnectQr();
         return;
       }
       setErr(t.noWallet);
@@ -347,19 +367,41 @@ export function BuyPanel({ lang }: Props) {
         {bought !== null && bought > 0n ? ` · ${t.yourBought}: ${fmtToken(bought, 18, 0)}` : ""}
       </p>
 
-      <Button
-        className="mt-5 w-full"
-        size="lg"
-        disabled={busy || (account ? waiting || closed || belowMin || kaiWhole <= 0n : false)}
-        onClick={() => {
-          if (!account) void onConnect();
-          else if (waiting || closed) return;
-          else void onApproveOrBuy();
-        }}
-      >
-        {busy && <Loader2 className="size-4 animate-spin" />}
-        {mobile && !account ? m.open : cta}
-      </Button>
+      {!account ? (
+        <div className="mt-5 grid gap-2 sm:grid-cols-2">
+          <Button
+            className="w-full"
+            size="lg"
+            disabled={busy}
+            onClick={() => void onConnect()}
+          >
+            {busy && <Loader2 className="size-4 animate-spin" />}
+            {mobile ? QR_CONNECT[lang] : cta}
+          </Button>
+          <Button
+            className="w-full"
+            size="lg"
+            variant="outline"
+            disabled={busy}
+            onClick={() => void onConnectQr()}
+          >
+            {QR_CONNECT[lang]}
+          </Button>
+        </div>
+      ) : (
+        <Button
+          className="mt-5 w-full"
+          size="lg"
+          disabled={busy || waiting || closed || belowMin || kaiWhole <= 0n}
+          onClick={() => {
+            if (waiting || closed) return;
+            void onApproveOrBuy();
+          }}
+        >
+          {busy && <Loader2 className="size-4 animate-spin" />}
+          {cta}
+        </Button>
+      )}
 
       {mobile && !account && <p className="mt-3 text-sm text-muted">{m.hint}</p>}
       {waiting && <p className="mt-3 text-sm text-muted">{t.saleWaitHint}</p>}
