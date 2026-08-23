@@ -2,7 +2,7 @@ export const KAI_SUPPLY = 1_618_033_988n;
 export const SELLABLE_PRESALE = 242_705_096n;
 export const WALLET_CAP_KAI = 5_000_000n;
 export const WALLET_CAP_WEI = WALLET_CAP_KAI * 10n ** 18n;
-export const MIN_USD = 10;
+export const MIN_USD = 1;
 export const PRESALE_TGE_PCT = 15;
 export const PRESALE_VEST_MONTHS = 18;
 

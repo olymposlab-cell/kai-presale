@@ -20,6 +20,12 @@ export function SiteHeader({
           <a href="#al" className="hover:text-fg">
             {t.buyCta}
           </a>
+          <a href="#genel" className="hover:text-fg">
+            {t.overview}
+          </a>
+          <a href="#yol" className="hover:text-fg">
+            {t.roadmap}
+          </a>
           <a href="#turlar" className="hover:text-fg">
             {t.rounds}
           </a>

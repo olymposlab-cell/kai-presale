@@ -8,7 +8,6 @@ import {
   WALLET_CAP_KAI,
   estimateUsdg,
   formatInt,
-  kaiFromUsd,
   priceUsd,
 } from "@/lib/kai/economics";
 import { PRESALE, ROBINHOOD_CHAIN_ID, shortAddr } from "@/lib/kai/chain";
@@ -40,6 +39,9 @@ import { Loader2, Wallet } from "lucide-react";
 
 type Props = { lang: Lang };
 
+const UNISWAP_ETH_USDG =
+  "https://app.uniswap.org/swap?chain=robinhood&inputCurrency=NATIVE&outputCurrency=0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168";
+
 const ASSETS: PayAsset[] = ["USDG", "ETH", "USDT", "USDC"];
 
 export function BuyPanel({ lang }: Props) {
@@ -51,9 +53,7 @@ export function BuyPanel({ lang }: Props) {
   const [phase, setPhase] = useState<"idle" | "swap" | "bridge" | "buy">("idle");
   const [saleOpened, setSaleOpened] = useState<boolean | null>(null);
   const [saleClosed, setSaleClosed] = useState<boolean | null>(null);
-  const [kaiInput, setKaiInput] = useState(() =>
-    kaiFromUsd(MIN_USD, ROUNDS[0].priceMicroUsd).toString(),
-  );
+  const [kaiInput, setKaiInput] = useState("500");
   const [quote, setQuote] = useState<bigint | null>(null);
   const [bal, setBal] = useState<bigint | null>(null);
   const [payBal, setPayBal] = useState<bigint | null>(null);
@@ -176,6 +176,11 @@ export function BuyPanel({ lang }: Props) {
       const maxPay = quote ?? localCost;
 
       if (!hasUsdg) {
+        if (asset === "ETH") {
+          window.open(UNISWAP_ETH_USDG, "_blank", "noopener,noreferrer");
+          setErr(t.swapUniswap);
+          return;
+        }
         setPhase("swap");
         const chain = await readWalletChain(eth);
         const route = await readPayBalance(asset, account, chain);
@@ -211,8 +216,11 @@ export function BuyPanel({ lang }: Props) {
       await buyKai(eth, account, wei, maxPay);
       setMsg(t.txOk);
       await refreshAccount(account);
-    } catch {
-      setErr(t.txFail);
+    } catch (e) {
+      const raw = e instanceof Error ? e.message : "";
+      if (raw === "NO_WALLET") setErr(t.noWallet);
+      else if (raw.includes("User rejected") || raw.includes("denied")) setErr(t.txFail);
+      else setErr(raw ? `${t.txFail}: ${raw.slice(0, 120)}` : t.txFail);
     } finally {
       setBusy(false);
       setPhase("idle");
@@ -227,6 +235,7 @@ export function BuyPanel({ lang }: Props) {
   else if (busy && phase === "swap") cta = t.swapping;
   else if (busy && phase === "bridge") cta = t.bridging;
   else if (busy) cta = t.buying;
+  else if (account && !hasUsdg && asset === "ETH") cta = t.openUniswap;
   else if (account && !hasUsdg && asset !== "USDG") cta = t.swapBuy;
   else if (account && needsApprove) cta = t.approve;
   else if (account) cta = t.buy;
@@ -288,6 +297,16 @@ export function BuyPanel({ lang }: Props) {
         <p className="mt-2 text-xs text-subtle">
           {t.payBal}: {fmtToken(payBal, payDecimals, asset === "ETH" ? 4 : 2)} {asset}
         </p>
+      )}
+      {asset === "ETH" && !hasUsdg && (
+        <a
+          className="mt-2 inline-block text-xs text-accent hover:underline"
+          href={UNISWAP_ETH_USDG}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t.openUniswap}
+        </a>
       )}
 
       <label className="mt-4 block text-sm text-muted">
