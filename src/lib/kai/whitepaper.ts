@@ -284,7 +284,7 @@ const tr: Wp = {
   future:
     "Yapay zeka her katmanı dönüştürüyor. KindredHQ eşleşmeyle bitmez: ilişki, zihin, beden. Kai adlı kendi zekânın ürün omurgası olması planlanır. İzin kullanıcıdadır; veri vitrin değildir.",
   close:
-    "Bu kâğıt hukuki bir izahname değildir. Katılmadan önce kontratı ve ürünü kendin oku. $KAI spekülasyon aracı olarak konumlandırılmaz.",
+    "Kontratı ve ürünü kendin oku. $KAI spekülasyon aracı olarak konumlandırılmaz.",
 };
 
 const en: Wp = {
@@ -318,7 +318,7 @@ const en: Wp = {
   future:
     "AI is rewriting every layer. KindredHQ does not end at the match: relationship, mind, body. The plan is Kai as the spine of the product. Permission is the user’s. Data is not a shop window.",
   close:
-    "This paper is not a legal prospectus. Read the contract and the product before you join. $KAI is not positioned as a speculation vehicle.",
+    "Read the contract and the product before you join. $KAI is not positioned as a speculation vehicle.",
 };
 
 function fromEn(partial: Partial<Wp> & Pick<Wp, "title" | "utilT" | "notT">): Wp {
@@ -358,7 +358,7 @@ export const whitepaper: Record<Lang, Wp> = {
     futureT: "Richtung",
     future:
       "KI schreibt jede Schicht um. KindredHQ endet nicht beim Match. Kai soll das Rückgrat werden.",
-    close: "Kein Prospekt. Vertrag und Produkt selbst lesen. $KAI ist kein Spekulationsvehikel.",
+    close: "Vertrag und Produkt selbst lesen. $KAI ist kein Spekulationsvehikel.",
   }),
   es: fromEn({
     title: "KAI Whitepaper",
@@ -390,7 +390,7 @@ export const whitepaper: Record<Lang, Wp> = {
     futureT: "Dirección",
     future:
       "La IA reescribe cada capa. KindredHQ no termina en el match. Kai debe ser la columna del producto.",
-    close: "No es un folleto legal. Lee el contrato y el producto. $KAI no es un vehículo especulativo.",
+    close: "Lee el contrato y el producto. $KAI no es un vehículo especulativo.",
   }),
   fr: fromEn({
     title: "KAI Whitepaper",
@@ -422,7 +422,7 @@ export const whitepaper: Record<Lang, Wp> = {
     futureT: "Direction",
     future:
       "L’IA réécrit chaque couche. KindredHQ ne s’arrête pas au match. Kai doit devenir la colonne du produit.",
-    close: "Pas un prospectus. Lisez le contrat et le produit. $KAI n’est pas un véhicule de spéculation.",
+    close: "Lisez le contrat et le produit. $KAI n’est pas un véhicule de spéculation.",
   }),
   it: fromEn({
     title: "KAI Whitepaper",
@@ -454,7 +454,7 @@ export const whitepaper: Record<Lang, Wp> = {
     futureT: "Direzione",
     future:
       "L’IA riscrive ogni strato. KindredHQ non finisce al match. Kai deve diventare la colonna del prodotto.",
-    close: "Non è un prospetto. Leggi contratto e prodotto. $KAI non è un veicolo speculativo.",
+    close: "Leggi contratto e prodotto. $KAI non è un veicolo speculativo.",
   }),
   pt: fromEn({
     title: "KAI Whitepaper",
@@ -486,7 +486,7 @@ export const whitepaper: Record<Lang, Wp> = {
     futureT: "Direção",
     future:
       "A IA reescreve cada camada. A KindredHQ não termina no match. Kai deve ser a espinha do produto.",
-    close: "Não é um prospecto. Leia o contrato e o produto. $KAI não é um veículo especulativo.",
+    close: "Leia o contrato e o produto. $KAI não é um veículo especulativo.",
   }),
   ru: fromEn({
     title: "KAI Whitepaper",
@@ -518,6 +518,6 @@ export const whitepaper: Record<Lang, Wp> = {
     futureT: "Направление",
     future:
       "ИИ переписывает каждый слой. KindredHQ не заканчивается матчем. Kai должен стать стержнем продукта.",
-    close: "Это не проспект. Читайте контракт и продукт. $KAI не позиционируется как спекуляция.",
+    close: "Читайте контракт и продукт. $KAI не позиционируется как спекуляция.",
   }),
 };
