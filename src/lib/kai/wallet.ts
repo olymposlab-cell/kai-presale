@@ -59,7 +59,8 @@ export async function connectWalletConnect(): Promise<Address> {
   }
   const provider = await EthereumProvider.init({
     projectId: WC_PROJECT_ID,
-    optionalChains: [ROBINHOOD_CHAIN_ID, 1, 8453, 42161, 56],
+    chains: [1],
+    optionalChains: [ROBINHOOD_CHAIN_ID, 8453, 42161, 56],
     showQrModal: true,
     methods: [
       "eth_sendTransaction",
@@ -90,7 +91,10 @@ export async function connectWalletConnect(): Promise<Address> {
   });
   await provider.connect();
   injectedOrWc = provider as unknown as EthereumProvider;
-  const accs = provider.accounts;
+  let accs = provider.accounts as string[] | undefined;
+  if (!accs?.length) {
+    accs = (await provider.request({ method: "eth_requestAccounts" })) as string[];
+  }
   if (!accs?.[0]) throw new Error("NO_ACCOUNT");
   try {
     await ensureChain(provider as unknown as EthereumProvider);
