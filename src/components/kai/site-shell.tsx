@@ -30,6 +30,9 @@ export function SiteHeader({
           <a href="/whitepaper" className="hover:text-fg">
             {t.wpNav}
           </a>
+          <a href="/vesting" className="hover:text-fg">
+            {t.vestNav}
+          </a>
           <a href="/#kanit" className="hover:text-fg">
             {proofs[lang].nav}
           </a>

@@ -43,6 +43,7 @@ type Dict = {
   utilBadge: string;
   utilBanner: string;
   wpNav: string;
+  vestNav: string;
   contrastTitle: string;
   contrastThemT: string;
   contrastThem: string;
@@ -237,6 +238,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI bir utility (kullanım) tokendir. Hisse değildir, borç değildir, kâr payı yoktur. Kai kredileri, premium katman ve ekosistem kapıları için yakıttır.",
     wpNav: "Whitepaper",
+    vestNav: "Hak ediş",
     contrastTitle: "Neden burası farklı",
     contrastThemT: "Klasik uygulamalar",
     contrastThem:
@@ -345,6 +347,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI is a utility token. Not equity, not debt, no profit share. It is fuel for Kai credits, the premium layer, and ecosystem access.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Why this is different",
     contrastThemT: "Typical apps",
     contrastThem:
@@ -453,6 +456,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI ist ein Utility-Token. Keine Aktie, keine Schuld, keine Gewinnbeteiligung. Treibstoff für Kai-Credits, Premium und Ökosystemzugang.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Warum das anders ist",
     contrastThemT: "Übliche Apps",
     contrastThem: "Profilfotos, Swipe, hundert Gesichter. Aussehen zuerst, Gespräch zuletzt.",
@@ -548,6 +552,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI es un token de utilidad. No es capital ni deuda, no hay reparto de beneficios. Combustible para créditos Kai, premium y acceso al ecosistema.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Por qué es distinto",
     contrastThemT: "Apps típicas",
     contrastThem: "Fotos, swipe, cien caras. Primero el aspecto; la charla al final.",
@@ -643,6 +648,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI est un jeton d’utilité. Pas d’action, pas de dette, pas de dividende. Carburant pour les crédits Kai, le premium et l’accès à l’écosystème.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Pourquoi c’est différent",
     contrastThemT: "Apps habituelles",
     contrastThem: "Photos, swipe, cent visages. L’apparence d’abord, la parole ensuite.",
@@ -738,6 +744,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI è un token di utilità. Non è equity, non è debito, nessun utile. Carburante per crediti Kai, premium e accesso all’ecosistema.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Perché è diverso",
     contrastThemT: "App tipiche",
     contrastThem: "Foto, swipe, cento volti. Prima l’aspetto, poi la chiacchiera.",
@@ -833,6 +840,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI é um token de utilidade. Não é equity, não é dívida, sem lucro. Combustível para créditos Kai, premium e acesso ao ecossistema.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Por que é diferente",
     contrastThemT: "Apps típicos",
     contrastThem: "Fotos, swipe, cem rostos. Primeiro a aparência; a conversa por último.",
@@ -928,6 +936,7 @@ export const copy: Record<Lang, Dict> = {
     utilBanner:
       "$KAI — утилити-токен. Это не доля, не долг и не дивиденд. Топливо для кредитов Kai, премиума и доступа к экосистеме.",
     wpNav: "Whitepaper",
+    vestNav: "Vesting",
     contrastTitle: "Почему здесь иначе",
     contrastThemT: "Обычные приложения",
     contrastThem: "Фото, свайп, сто лиц. Сначала внешность, разговор в конце.",

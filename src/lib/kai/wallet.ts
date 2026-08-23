@@ -16,6 +16,8 @@ import {
   PRESALE_ABI,
   ROBINHOOD_CHAIN_ID,
   USDG,
+  VESTING,
+  VESTING_ABI,
   robinhood,
 } from "./chain";
 import { WALLET_CAP_WEI } from "./economics";
@@ -283,6 +285,30 @@ export async function readPurchased(address: Address) {
     functionName: "purchasedByWallet",
     args: [address],
   });
+}
+
+export async function readVesting(address: Address) {
+  const [tgeOn, tgeTs, claimedAmt, claimableAmt] = await Promise.all([
+    publicClient.readContract({ address: VESTING, abi: VESTING_ABI, functionName: "tgeActivated" }),
+    publicClient.readContract({ address: VESTING, abi: VESTING_ABI, functionName: "tgeTimestamp" }),
+    publicClient.readContract({ address: VESTING, abi: VESTING_ABI, functionName: "claimed", args: [address] }),
+    publicClient.readContract({ address: VESTING, abi: VESTING_ABI, functionName: "claimable", args: [address] }),
+  ]);
+  return { tgeOn, tgeTs: BigInt(tgeTs), claimedAmt, claimableAmt };
+}
+
+export async function claimVested(eth: EthereumProvider, account: Address) {
+  await switchRobinhood(eth);
+  const wc = walletClient(eth, account);
+  const hash = await wc.writeContract({
+    address: VESTING,
+    abi: VESTING_ABI,
+    functionName: "claim",
+    account,
+    chain: robinhood,
+  });
+  await publicClient.waitForTransactionReceipt({ hash });
+  return hash;
 }
 
 export async function approveUsdg(eth: EthereumProvider, account: Address, amount: bigint) {

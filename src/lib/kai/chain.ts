@@ -15,6 +15,7 @@ export const PRESALE = "0xA42e7A60Ad3F9dCbCb7F903055249Df01920f81B" as const;
 export const KAI_TOKEN = "0x6e4083dA6dcc81CCd229BfA123Be785db9Dd40FA" as const;
 export const USDG = "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168" as const;
 export const TREASURY = "0x5039eDfA2AC9f7D075f38395936634829e9cf8ce" as const;
+export const VESTING = "0x089fA287b118f5F9522eA664972FAac267bF2c47" as const;
 
 export const PRESALE_ABI = [
   {
@@ -64,6 +65,36 @@ export const PRESALE_ABI = [
     ],
     outputs: [],
   },
+] as const satisfies Abi;
+
+export const VESTING_ABI = [
+  { type: "function", name: "tgeActivated", stateMutability: "view", inputs: [], outputs: [{ type: "bool" }] },
+  { type: "function", name: "tgeTimestamp", stateMutability: "view", inputs: [], outputs: [{ type: "uint64" }] },
+  {
+    type: "function",
+    name: "claimed",
+    stateMutability: "view",
+    inputs: [{ type: "address" }],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "claimable",
+    stateMutability: "view",
+    inputs: [{ type: "address" }],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "vestedAmount",
+    stateMutability: "view",
+    inputs: [
+      { type: "address" },
+      { type: "uint256" },
+    ],
+    outputs: [{ type: "uint256" }],
+  },
+  { type: "function", name: "claim", stateMutability: "nonpayable", inputs: [], outputs: [] },
 ] as const satisfies Abi;
 
 export const ERC20_ABI = [
