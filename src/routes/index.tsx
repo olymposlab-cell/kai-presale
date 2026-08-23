@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { BuyPanel } from "@/components/kai/buy-panel";
 import { SiteFooter, SiteHeader } from "@/components/kai/site-shell";
-import { ALLOC_KEYS, KPI_PRESALE, copy, isLang, localeOf, type Lang } from "@/lib/kai/copy";
+import { ALLOC_KEYS, copy, isLang, localeOf, type Lang } from "@/lib/kai/copy";
 import {
   ALLOCATION,
   KAI_SUPPLY,
@@ -34,32 +34,31 @@ function Home() {
     <div id="top" className="min-h-dvh">
       <SiteHeader lang={lang} onLang={setLang} />
 
-      <main className="mx-auto grid max-w-5xl gap-10 px-4 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12 lg:py-16">
+      <main className="mx-auto grid max-w-5xl gap-10 px-4 py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-12 lg:py-16">
         <div>
-          <p className="inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-accent">
+          <p className="inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-medium text-accent">
             {t.chainBadge}
           </p>
-          <p className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-subtle">
+          <p className="mt-4 text-xs font-medium uppercase tracking-[0.16em] text-subtle">
             {t.kicker} · {t.everyone}
           </p>
           <div className="kai-orb mt-6" />
-          <h1 className="mt-6 font-display text-[clamp(2.1rem,5vw,3.4rem)] leading-[1.12] tracking-[-0.03em] text-fg">
+          <h1 className="mt-6 font-display text-[clamp(2.15rem,5.2vw,3.55rem)] leading-[1.12] tracking-[-0.03em] text-fg">
             {t.heroTitle}
           </h1>
-          <p className="mt-3 max-w-[46ch] text-base text-muted">{t.heroTagline}</p>
-          <p className="mt-3 max-w-[46ch] text-base text-muted sm:text-lg">{t.heroBody}</p>
-          <p className="mt-4 max-w-[46ch] text-sm text-subtle">{t.chainHint}</p>
+          <p className="mt-4 max-w-[38ch] font-display text-xl leading-snug text-fg">{t.heroTagline}</p>
+          <p className="mt-4 max-w-[48ch] text-base leading-relaxed text-muted sm:text-lg">{t.heroBody}</p>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
             {[
-              [t.supply, formatInt(KAI_SUPPLY, locale)],
-              [KPI_PRESALE[lang], formatInt(SELLABLE_PRESALE, locale)],
-              [t.rounds, "4"],
-              ["$", `$${priceUsd(ROUNDS[0].priceMicroUsd).toFixed(3)}`],
+              [t.kpiSupply, formatInt(KAI_SUPPLY, locale)],
+              [t.kpiPresale, formatInt(SELLABLE_PRESALE, locale)],
+              [t.kpiRounds, "4"],
+              [t.kpiPrice, `$${priceUsd(ROUNDS[0].priceMicroUsd).toFixed(3)}`],
             ].map(([label, value]) => (
-              <div key={String(label)} className="rounded-[var(--radius-md)] border border-border bg-elevated p-3">
-                <p className="text-[11px] uppercase tracking-[0.12em] text-subtle">{label}</p>
-                <p className="mt-1 font-mono text-sm tabular-nums text-fg">{value}</p>
+              <div key={label} className="kai-kpi rounded-[var(--radius-md)] border border-border bg-elevated p-3">
+                <p className="kai-kpi-label text-subtle">{label}</p>
+                <p className="mt-2 font-mono text-sm tabular-nums text-fg">{value}</p>
               </div>
             ))}
           </div>
@@ -71,17 +70,74 @@ function Home() {
       </main>
 
       <section id="genel" className="border-t border-border py-14">
-        <div className="mx-auto grid max-w-5xl gap-6 px-4 md:grid-cols-3">
-          {[
-            [t.whatHq, t.whatHqBody],
-            [t.whatKai, t.whatKaiBody],
-            [t.whyToken, t.whyTokenBody],
-          ].map(([title, body]) => (
-            <article key={title} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
-              <h2 className="font-display text-xl text-fg">{title}</h2>
-              <p className="mt-2 text-sm text-muted">{body}</p>
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="font-display text-3xl text-fg">{t.contrastTitle}</h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <article className="rounded-[var(--radius-lg)] border border-border bg-surface p-6">
+              <p className="text-xs uppercase tracking-[0.14em] text-subtle">{t.contrastThemT}</p>
+              <p className="mt-3 text-base leading-relaxed text-muted">{t.contrastThem}</p>
             </article>
-          ))}
+            <article className="rounded-[var(--radius-lg)] border border-accent/35 bg-elevated p-6">
+              <p className="text-xs uppercase tracking-[0.14em] text-accent">{t.contrastUsT}</p>
+              <p className="mt-3 text-base leading-relaxed text-fg">{t.contrastUs}</p>
+            </article>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {[
+              [t.whatHq, t.whatHqBody],
+              [t.whatKai, t.whatKaiBody],
+              [t.whyToken, t.whyTokenBody],
+            ].map(([title, body]) => (
+              <article key={title} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
+                <h3 className="font-display text-xl text-fg">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="gelecek" className="border-t border-border py-14">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="font-display text-3xl text-fg">{t.futureTitle}</h2>
+          <p className="mt-3 max-w-[62ch] text-base leading-relaxed text-muted">{t.futureLead}</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {[
+              [t.futHealthT, t.futHealth],
+              [t.futCareT, t.futCare],
+              [t.futKaiT, t.futKai],
+            ].map(([title, body]) => (
+              <article key={title} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
+                <h3 className="font-display text-xl text-fg">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="katil" className="border-t border-border py-14">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="font-display text-3xl text-fg">{t.whyJoinTitle}</h2>
+          <p className="mt-3 max-w-[62ch] text-base leading-relaxed text-muted">{t.whyJoinLead}</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {[
+              [t.join1T, t.join1],
+              [t.join2T, t.join2],
+              [t.join3T, t.join3],
+            ].map(([title, body]) => (
+              <article key={title} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
+                <h3 className="font-medium text-fg">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
+              </article>
+            ))}
+          </div>
+          <a
+            href="#al"
+            className="mt-8 inline-flex h-12 items-center rounded-[var(--radius-md)] bg-accent px-6 text-sm font-medium text-accent-foreground"
+          >
+            {t.buyCta}
+          </a>
         </div>
       </section>
 
@@ -119,7 +175,7 @@ function Home() {
             ].map(([title, body]) => (
               <article key={title} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
                 <h3 className="font-medium text-fg">{title}</h3>
-                <p className="mt-2 text-sm text-muted">{body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
               </article>
             ))}
           </div>
@@ -134,14 +190,12 @@ function Home() {
             {ROUNDS.map((r) => (
               <article key={r.n} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
                 <p className="text-xs uppercase tracking-[0.14em] text-subtle">
-                  {t.rounds} {r.n}
+                  {t.kpiRounds} {r.n}
                 </p>
                 <p className="mt-2 font-display text-2xl tabular-nums text-accent">
                   ${priceUsd(r.priceMicroUsd).toFixed(3)}
                 </p>
-                <p className="mt-1 font-mono text-sm text-muted">
-                  {formatInt(r.cap, locale)} KAI
-                </p>
+                <p className="mt-1 font-mono text-sm text-muted">{formatInt(r.cap, locale)} KAI</p>
               </article>
             ))}
           </div>
@@ -151,13 +205,10 @@ function Home() {
       <section id="tokenomi" className="border-t border-border py-14">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="font-display text-3xl text-fg">{t.tokenomics}</h2>
-          <p className="mt-3 font-display text-2xl text-accent sm:text-3xl">
+          <p className="mt-3 font-display text-2xl tabular-nums text-accent sm:text-3xl">
             {formatInt(KAI_SUPPLY, locale)} KAI
           </p>
-          <p className="mt-1 text-sm text-muted">
-            {t.supply} · {formatInt(SELLABLE_PRESALE, locale)} KAI
-          </p>
-          <p className="mt-2 text-sm text-subtle">{t.supplyLine}</p>
+          <p className="mt-2 max-w-[60ch] text-sm text-muted">{t.supplyLine}</p>
           <div className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-border">
             <table className="w-full text-left text-sm">
               <tbody>

@@ -1,4 +1,4 @@
-import { copy, LANGS, type Lang } from "@/lib/kai/copy";
+import { FUTURE_NAV, copy, LANGS, type Lang } from "@/lib/kai/copy";
 import { Button } from "@/components/ui/button";
 
 export function SiteHeader({
@@ -28,6 +28,9 @@ export function SiteHeader({
           </a>
           <a href="#genel" className="hover:text-fg">
             {t.overview}
+          </a>
+          <a href="#gelecek" className="hover:text-fg">
+            {FUTURE_NAV[lang]}
           </a>
           <a href="#yol" className="hover:text-fg">
             {t.roadmap}
