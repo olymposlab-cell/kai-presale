@@ -60,7 +60,7 @@ export async function connectWalletConnect(): Promise<Address> {
   const provider = await EthereumProvider.init({
     projectId: WC_PROJECT_ID,
     chains: [1],
-    optionalChains: [1],
+    optionalChains: [1, ROBINHOOD_CHAIN_ID],
     rpcMap: {
       1: "https://ethereum-rpc.publicnode.com",
       [ROBINHOOD_CHAIN_ID]: "https://rpc.mainnet.chain.robinhood.com",
@@ -102,9 +102,9 @@ export async function connectWalletConnect(): Promise<Address> {
   }
   if (!accs?.[0]) throw new Error("NO_ACCOUNT");
   try {
-    await ensureChain(provider as unknown as EthereumProvider);
+    await switchRobinhood(provider as unknown as EthereumProvider);
   } catch {
-    /* phone wallet may not support addChain; buy will switch later */
+    /* MetaMask will be asked again on approve/buy */
   }
   return accs[0] as Address;
 }
@@ -136,6 +136,7 @@ export async function ensureChainId(
     chainName: string;
     rpcUrls: string[];
     nativeCurrency: { name: string; symbol: string; decimals: number };
+    blockExplorerUrls?: string[];
   },
 ) {
   const id = (await eth.request({ method: "eth_chainId" })) as string;
@@ -146,11 +147,23 @@ export async function ensureChainId(
       params: [{ chainId: meta.chainId }],
     });
   } catch (err) {
-    const e = err as { code?: number };
-    if (e.code === 4902) {
+    const e = err as { code?: number; message?: string };
+    if (e.code === 4902 || /unrecognized|not added|unknown/i.test(e.message ?? "")) {
       await eth.request({
         method: "wallet_addEthereumChain",
-        params: [meta],
+        params: [
+          {
+            chainId: meta.chainId,
+            chainName: meta.chainName,
+            rpcUrls: meta.rpcUrls,
+            nativeCurrency: meta.nativeCurrency,
+            blockExplorerUrls: meta.blockExplorerUrls ?? ["https://robinhoodchain.blockscout.com"],
+          },
+        ],
+      });
+      await eth.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: meta.chainId }],
       });
     } else {
       throw err;
@@ -164,7 +177,21 @@ export async function ensureChain(eth: EthereumProvider) {
     chainName: "Robinhood Chain",
     rpcUrls: ["https://rpc.mainnet.chain.robinhood.com"],
     nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+    blockExplorerUrls: ["https://robinhoodchain.blockscout.com"],
   });
+}
+
+/** WalletConnect sessions start on Ethereum; force Robinhood before any send. */
+export async function switchRobinhood(eth: EthereumProvider) {
+  const wc = eth as EthereumProvider & { setDefaultChain?: (id: string) => void };
+  try {
+    await ensureChain(eth);
+  } catch {
+    /* still try setDefaultChain */
+  }
+  wc.setDefaultChain?.(`eip155:${ROBINHOOD_CHAIN_ID}`);
+  const id = await readWalletChain(eth);
+  if (id !== ROBINHOOD_CHAIN_ID) throw new Error("WRONG_CHAIN");
 }
 
 export function walletClient(eth: EthereumProvider, account: Address, chain: Chain = robinhood) {
@@ -236,7 +263,7 @@ export async function readPurchased(address: Address) {
 }
 
 export async function approveUsdg(eth: EthereumProvider, account: Address, amount: bigint) {
-  await ensureChain(eth);
+  await switchRobinhood(eth);
   const wc = walletClient(eth, account);
   const hash = await wc.writeContract({
     address: USDG,
@@ -256,7 +283,7 @@ export async function buyKai(
   kaiWei: bigint,
   maxPayment: bigint,
 ) {
-  await ensureChain(eth);
+  await switchRobinhood(eth);
   const wc = walletClient(eth, account);
   const hash = await wc.writeContract({
     address: PRESALE,
