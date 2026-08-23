@@ -157,7 +157,9 @@ export function BuyPanel({ lang }: Props) {
       await refreshAccount(addr);
     } catch (e) {
       const raw = e instanceof Error ? e.message : "";
-      if (raw.includes("User rejected") || raw.includes("denied") || raw === "Connection request reset") {
+      if (raw === "TIMEOUT") setErr(lang === "tr" ? "QR zaman aşımı. Pencereyi kapatıp tekrar dene." : "QR timed out. Close and try again.");
+      else if (raw === "NO_ACCOUNT") setErr(lang === "tr" ? "Cüzdan hesap vermedi. Trust’ta Ethereum cüzdanı seç, kamerayla değil uygulama içi Tara ile oku." : "Wallet sent no account. Scan from inside Trust/MetaMask, not the camera.");
+      else if (raw.includes("User rejected") || raw.includes("denied") || raw === "Connection request reset") {
         setErr(t.txFail);
       } else {
         setErr(raw ? `${t.txFail}: ${raw.slice(0, 100)}` : t.txFail);

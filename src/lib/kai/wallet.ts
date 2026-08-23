@@ -60,14 +60,15 @@ export async function connectWalletConnect(): Promise<Address> {
   const provider = await EthereumProvider.init({
     projectId: WC_PROJECT_ID,
     chains: [1],
-    optionalChains: [ROBINHOOD_CHAIN_ID, 8453, 42161, 56],
+    optionalChains: [1],
+    rpcMap: {
+      1: "https://ethereum-rpc.publicnode.com",
+      [ROBINHOOD_CHAIN_ID]: "https://rpc.mainnet.chain.robinhood.com",
+    },
     showQrModal: true,
     methods: [
       "eth_sendTransaction",
-      "eth_signTransaction",
       "personal_sign",
-      "eth_sign",
-      "eth_signTypedData",
       "eth_signTypedData_v4",
       "wallet_switchEthereumChain",
       "wallet_addEthereumChain",
@@ -89,7 +90,11 @@ export async function connectWalletConnect(): Promise<Address> {
       icons: ["https://presale.kindredhq.io/favicon.svg"],
     },
   });
-  await provider.connect();
+  const connected = provider.connect();
+  const timed = new Promise<never>((_, reject) => {
+    window.setTimeout(() => reject(new Error("TIMEOUT")), 90_000);
+  });
+  await Promise.race([connected, timed]);
   injectedOrWc = provider as unknown as EthereumProvider;
   let accs = provider.accounts as string[] | undefined;
   if (!accs?.length) {
