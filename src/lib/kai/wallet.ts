@@ -61,6 +61,26 @@ export async function connectWalletConnect(): Promise<Address> {
     projectId: WC_PROJECT_ID,
     optionalChains: [ROBINHOOD_CHAIN_ID, 1, 8453, 42161, 56],
     showQrModal: true,
+    methods: [
+      "eth_sendTransaction",
+      "eth_signTransaction",
+      "personal_sign",
+      "eth_sign",
+      "eth_signTypedData",
+      "eth_signTypedData_v4",
+      "wallet_switchEthereumChain",
+      "wallet_addEthereumChain",
+    ],
+    events: ["chainChanged", "accountsChanged"],
+    qrModalOptions: {
+      themeMode: "dark",
+      enableExplorer: true,
+      explorerRecommendedWalletIds: [
+        "c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96",
+        "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0",
+        "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369",
+      ],
+    },
     metadata: {
       name: "KindredHQ KAI",
       description: "KAI presale on Robinhood Chain",

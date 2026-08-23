@@ -1000,7 +1000,7 @@ export const QR_CONNECT: Record<Lang, string> = {
 
 export const MOBILE_WALLET: Record<Lang, { hint: string; open: string }> = {
   tr: {
-    hint: "Safari’de uzantı yok. QR ile bağla: MetaMask uygulaması karekodu okur. Ya da uygulamadaki tarayıcıdan siteyi aç.",
+    hint: "Safari’de uzantı yok. QR ile bağla — MetaMask, Trust Wallet, Rainbow karekodu okur. Ya da uygulamadaki tarayıcıdan siteyi aç.",
     open: "MetaMask uygulamasında aç",
   },
   en: {
