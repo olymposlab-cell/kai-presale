@@ -1,9 +1,9 @@
 export const LANGS = [
-  { id: "tr", native: "Türkçe", locale: "tr-TR" },
   { id: "en", native: "English", locale: "en-US" },
   { id: "de", native: "Deutsch", locale: "de-DE" },
   { id: "es", native: "Español", locale: "es-ES" },
   { id: "fr", native: "Français", locale: "fr-FR" },
+  { id: "tr", native: "Türkçe", locale: "tr-TR" },
   { id: "it", native: "Italiano", locale: "it-IT" },
   { id: "pt", native: "Português", locale: "pt-BR" },
   { id: "ru", native: "Русский", locale: "ru-RU" },
@@ -17,6 +17,19 @@ export function localeOf(lang: Lang) {
 
 export function isLang(v: string): v is Lang {
   return LANGS.some((l) => l.id === v);
+}
+
+/** Browser language; unknown → English. Manual pick is stored separately. */
+export function detectLang(): Lang {
+  if (typeof navigator === "undefined") return "en";
+  const locked = localStorage.getItem("kai-lang-user");
+  if (locked && isLang(locked)) return locked;
+  const codes = [...(navigator.languages ?? []), navigator.language].filter(Boolean);
+  for (const code of codes) {
+    const short = code.slice(0, 2).toLowerCase();
+    if (isLang(short)) return short;
+  }
+  return "en";
 }
 
 type Dict = {
@@ -283,7 +296,7 @@ export const copy: Record<Lang, Dict> = {
     tokenomics: "Dağılım",
     supply: "Toplam arz",
     supplyLine: "Arz sabittir. Ön satış tavanı kontrata kilitlidir.",
-    kpiSupply: "Toplam arz",
+    kpiSupply: "Arz",
     kpiPresale: "Ön satış",
     kpiRounds: "Tur",
     kpiPrice: "İlk fiyat",

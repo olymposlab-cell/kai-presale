@@ -35,7 +35,12 @@ let injectedOrWc: EthereumProvider | undefined;
 
 export function getEthereum(): EthereumProvider | undefined {
   if (typeof window === "undefined") return undefined;
-  return injectedOrWc ?? window.ethereum;
+  if (window.ethereum) return window.ethereum;
+  return injectedOrWc;
+}
+
+export function usingWalletConnect() {
+  return Boolean(injectedOrWc) && !window.ethereum;
 }
 
 export function setEthereumProvider(p: EthereumProvider | undefined) {

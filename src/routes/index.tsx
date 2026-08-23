@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { BuyPanel } from "@/components/kai/buy-panel";
 import { SiteFooter, SiteHeader } from "@/components/kai/site-shell";
-import { ALLOC_KEYS, copy, isLang, localeOf, type Lang } from "@/lib/kai/copy";
+import { ALLOC_KEYS, copy, detectLang, localeOf, type Lang } from "@/lib/kai/copy";
 import {
   ALLOCATION,
   KAI_SUPPLY,
@@ -16,23 +16,26 @@ import { KAI_TOKEN, PRESALE, USDG, explorerToken, shortAddr } from "@/lib/kai/ch
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
-  const [lang, setLang] = useState<Lang>("tr");
+  const [lang, setLang] = useState<Lang>("en");
   const t = copy[lang];
   const locale = localeOf(lang);
 
   useEffect(() => {
-    const saved = localStorage.getItem("kai-lang");
-    if (saved && isLang(saved)) setLang(saved);
+    setLang(detectLang());
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("kai-lang", lang);
     document.documentElement.lang = lang;
   }, [lang]);
 
+  function onLang(next: Lang) {
+    localStorage.setItem("kai-lang-user", next);
+    setLang(next);
+  }
+
   return (
     <div id="top" className="min-h-dvh">
-      <SiteHeader lang={lang} onLang={setLang} />
+      <SiteHeader lang={lang} onLang={onLang} />
 
       <main className="mx-auto grid max-w-5xl gap-10 px-4 py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-12 lg:py-16">
         <div>
@@ -49,16 +52,16 @@ function Home() {
           <p className="mt-4 max-w-[38ch] font-display text-xl leading-snug text-fg">{t.heroTagline}</p>
           <p className="mt-4 max-w-[48ch] text-base leading-relaxed text-muted sm:text-lg">{t.heroBody}</p>
 
-          <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+          <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {[
               [t.kpiSupply, formatInt(KAI_SUPPLY, locale)],
               [t.kpiPresale, formatInt(SELLABLE_PRESALE, locale)],
               [t.kpiRounds, "4"],
               [t.kpiPrice, `$${priceUsd(ROUNDS[0].priceMicroUsd).toFixed(3)}`],
             ].map(([label, value]) => (
-              <div key={label} className="kai-kpi rounded-[var(--radius-md)] border border-border bg-elevated p-3">
+              <div key={label} className="kai-kpi min-w-0 overflow-hidden rounded-[var(--radius-md)] border border-border bg-elevated p-2.5 sm:p-3">
                 <p className="kai-kpi-label text-subtle">{label}</p>
-                <p className="mt-2 font-mono text-sm tabular-nums text-fg">{value}</p>
+                <p className="mt-1.5 break-all font-mono text-xs tabular-nums text-fg sm:text-sm">{value}</p>
               </div>
             ))}
           </div>

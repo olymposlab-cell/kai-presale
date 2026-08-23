@@ -25,6 +25,7 @@ import {
   connectWallet,
   connectWalletConnect,
   ensureChainId,
+  usingWalletConnect,
   fmtToken,
   fmtUsdg,
   getEthereum,
@@ -159,7 +160,10 @@ export function BuyPanel({ lang }: Props) {
       const raw = e instanceof Error ? e.message : "";
       if (raw === "TIMEOUT") setErr(lang === "tr" ? "QR zaman aşımı. Pencereyi kapatıp tekrar dene." : "QR timed out. Close and try again.");
       else if (raw === "NO_ACCOUNT") setErr(lang === "tr" ? "Cüzdan hesap vermedi. Trust’ta Ethereum cüzdanı seç, kamerayla değil uygulama içi Tara ile oku." : "Wallet sent no account. Scan from inside Trust/MetaMask, not the camera.");
-      else if (raw === "WRONG_CHAIN" || /unknown RPC|chain: Robinhood/i.test(raw)) {
+      else if (
+        usingWalletConnect() &&
+        (raw === "WRONG_CHAIN" || /unknown RPC|chain: Robinhood/i.test(raw))
+      ) {
         setErr(
           lang === "tr"
             ? "QR oturumu Robinhood Chain’e geçemedi. Telefonda ağı onayla. En kolayı: Chrome’da MetaMask uzantısı (QR değil)."
@@ -258,7 +262,10 @@ export function BuyPanel({ lang }: Props) {
     } catch (e) {
       const raw = e instanceof Error ? e.message : "";
       if (raw === "NO_WALLET") setErr(t.noWallet);
-      else if (raw === "WRONG_CHAIN" || /unknown RPC|chain: Robinhood/i.test(raw)) {
+      else if (
+        usingWalletConnect() &&
+        (raw === "WRONG_CHAIN" || /unknown RPC|chain: Robinhood/i.test(raw))
+      ) {
         setErr(
           lang === "tr"
             ? "QR oturumu Robinhood Chain’e geçemedi. Telefonda ağı onayla. En kolayı: Chrome’da MetaMask uzantısı (QR değil)."

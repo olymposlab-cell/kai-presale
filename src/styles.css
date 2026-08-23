@@ -81,7 +81,9 @@
 }
 
 .kai-kpi {
-  min-height: 5.25rem;
+  min-height: 4.75rem;
+  min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -89,9 +91,9 @@
 
 .kai-kpi-label {
   font-size: 0.6875rem;
-  line-height: 1.3;
-  letter-spacing: 0.04em;
-  text-wrap: balance;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
 }
 
 .kai-orb {
