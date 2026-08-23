@@ -45,7 +45,7 @@ export function setEthereumProvider(p: EthereumProvider | undefined) {
 /** wagmi docs sample — replace with Reown cloud ID if QR is rate-limited. */
 export const WC_PROJECT_ID =
   (import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string | undefined)?.trim() ||
-  "3fcc6bba6f1de962d911bb5b5c3dba68";
+  "34252b5566c3046e99050e52a9a4c7e9";
 
 export async function connectWalletConnect(): Promise<Address> {
   const { EthereumProvider } = await import("@walletconnect/ethereum-provider");
