@@ -1,4 +1,4 @@
-import { FUTURE_NAV, copy, LANGS, type Lang } from "@/lib/kai/copy";
+import { copy, LANGS, type Lang } from "@/lib/kai/copy";
 import { proofs } from "@/lib/kai/whitepaper";
 import { Button } from "@/components/ui/button";
 
@@ -19,34 +19,19 @@ export function SiteHeader({
         </div>
       </div>
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 px-4">
-        <a href="#top" className="flex items-center gap-2">
+        <a href="/" className="flex shrink-0 items-center gap-2">
           <span className="kai-orb-sm" />
           <span className="font-display text-lg tracking-tight text-fg">{t.brand}</span>
         </a>
-        <nav className="hidden items-center gap-5 text-sm text-muted lg:flex">
-          <a href="#al" className="hover:text-fg">
-            {t.buyCta}
-          </a>
+        <nav className="hidden items-center gap-6 text-sm text-muted md:flex">
           <a href="/whitepaper" className="hover:text-fg">
             {t.wpNav}
           </a>
-          <a href="/vesting" className="hover:text-fg">
+          <a href="/vesting" className="whitespace-nowrap hover:text-fg">
             {t.vestNav}
           </a>
           <a href="/#kanit" className="hover:text-fg">
             {proofs[lang].nav}
-          </a>
-          <a href="#gelecek" className="hover:text-fg">
-            {FUTURE_NAV[lang]}
-          </a>
-          <a href="#yol" className="hover:text-fg">
-            {t.roadmap}
-          </a>
-          <a href="#turlar" className="hover:text-fg">
-            {t.rounds}
-          </a>
-          <a href="#tokenomi" className="hover:text-fg">
-            {t.tokenomics}
           </a>
           <a href="https://kindredhq.io" className="hover:text-fg">
             {t.product}
@@ -60,7 +45,7 @@ export function SiteHeader({
             id="kai-lang"
             value={lang}
             onChange={(e) => onLang(e.target.value as Lang)}
-            className="h-9 max-w-[9.5rem] rounded-[var(--radius-xs)] border border-border bg-surface px-2 text-xs text-fg outline-none ring-ring focus:ring-2"
+            className="h-9 max-w-[8.5rem] rounded-[var(--radius-xs)] border border-border bg-surface px-2 text-xs text-fg outline-none ring-ring focus:ring-2"
           >
             {LANGS.map((l) => (
               <option key={l.id} value={l.id}>
@@ -69,7 +54,7 @@ export function SiteHeader({
             ))}
           </select>
           <Button size="sm" asChild>
-            <a href="#al">{t.buyCta}</a>
+            <a href="/#al">{t.buyCta}</a>
           </Button>
         </div>
       </div>
@@ -85,9 +70,20 @@ export function SiteFooter({ lang }: { lang: Lang }) {
         <p>
           {t.brand} · {t.footerChain}
         </p>
-        <a href="https://kindredhq.io" className="hover:text-fg">
-          kindredhq.io
-        </a>
+        <p className="flex flex-wrap gap-4">
+          <a className="hover:text-fg" href="/whitepaper">
+            {t.wpNav}
+          </a>
+          <a className="hover:text-fg" href="/vesting">
+            {t.vestNav}
+          </a>
+          <a className="hover:text-fg" href="/#kanit">
+            {t.tokenomics}
+          </a>
+          <a className="hover:text-fg" href="https://kindredhq.io">
+            {t.product}
+          </a>
+        </p>
       </div>
     </footer>
   );
