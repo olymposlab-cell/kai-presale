@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Address } from "viem";
 import { Button } from "@/components/ui/button";
-import { copy, localeOf, type Lang } from "@/lib/kai/copy";
+import { MM_DAPP, MOBILE_WALLET, copy, localeOf, type Lang } from "@/lib/kai/copy";
 import {
   MIN_USD,
   ROUNDS,
@@ -46,6 +46,7 @@ const ASSETS: PayAsset[] = ["USDG", "ETH", "USDT", "USDC"];
 
 export function BuyPanel({ lang }: Props) {
   const t = copy[lang];
+  const m = MOBILE_WALLET[lang];
   const locale = localeOf(lang);
   const [account, setAccount] = useState<Address | null>(null);
   const [asset, setAsset] = useState<PayAsset>("USDG");
@@ -62,6 +63,11 @@ export function BuyPanel({ lang }: Props) {
   const [bought, setBought] = useState<bigint | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    setMobile(/iPhone|iPad|Android/i.test(navigator.userAgent) && !getEthereum());
+  }, []);
 
   const kaiWhole = useMemo(() => {
     const n = kaiInput.replace(/[^\d]/g, "");
@@ -143,12 +149,16 @@ export function BuyPanel({ lang }: Props) {
 
   async function onConnect() {
     setErr(null);
-    setBusy(true);
-    try {
-      if (!getEthereum()) {
-        setErr(t.noWallet);
+    if (!getEthereum()) {
+      if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
+        window.location.href = MM_DAPP;
         return;
       }
+      setErr(t.noWallet);
+      return;
+    }
+    setBusy(true);
+    try {
       const addr = await connectWallet();
       setAccount(addr);
       await refreshAccount(addr);
@@ -348,9 +358,10 @@ export function BuyPanel({ lang }: Props) {
         }}
       >
         {busy && <Loader2 className="size-4 animate-spin" />}
-        {cta}
+        {mobile && !account ? m.open : cta}
       </Button>
 
+      {mobile && !account && <p className="mt-3 text-sm text-muted">{m.hint}</p>}
       {waiting && <p className="mt-3 text-sm text-muted">{t.saleWaitHint}</p>}
       {err && <p className="mt-3 text-sm text-danger">{err}</p>}
       {msg && <p className="mt-3 text-sm text-ok">{msg}</p>}

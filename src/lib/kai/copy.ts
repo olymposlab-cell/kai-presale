@@ -986,3 +986,41 @@ export const FUTURE_NAV: Record<Lang, string> = {
   ru: "Будущее",
 };
 
+export const MM_DAPP = "https://metamask.app.link/dapp/presale.kindredhq.io";
+
+export const MOBILE_WALLET: Record<Lang, { hint: string; open: string }> = {
+  tr: {
+    hint: "iPhone/Android tarayıcısında cüzdan yok. MetaMask uygulamasını aç, alttan tarayıcıya gir, bu adresi yapıştır.",
+    open: "MetaMask uygulamasında aç",
+  },
+  en: {
+    hint: "Mobile Safari/Chrome has no wallet. Open the MetaMask app, use its built-in browser, paste this site.",
+    open: "Open in MetaMask app",
+  },
+  de: {
+    hint: "Im Handy-Browser gibt es keine Wallet. MetaMask-App öffnen, internen Browser nutzen.",
+    open: "In der MetaMask-App öffnen",
+  },
+  es: {
+    hint: "El navegador del móvil no tiene cartera. Abre la app MetaMask y usa su navegador interno.",
+    open: "Abrir en la app MetaMask",
+  },
+  fr: {
+    hint: "Le navigateur mobile n’a pas de portefeuille. Ouvrez l’app MetaMask et son navigateur intégré.",
+    open: "Ouvrir dans l’app MetaMask",
+  },
+  it: {
+    hint: "Il browser del telefono non ha wallet. Apri l’app MetaMask e usa il browser interno.",
+    open: "Apri nell’app MetaMask",
+  },
+  pt: {
+    hint: "O navegador do celular não tem carteira. Abra o app MetaMask e use o navegador interno.",
+    open: "Abrir no app MetaMask",
+  },
+  ru: {
+    hint: "В мобильном браузере нет кошелька. Откройте приложение MetaMask и его встроенный браузер.",
+    open: "Открыть в приложении MetaMask",
+  },
+};
+
+
