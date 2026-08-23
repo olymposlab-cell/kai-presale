@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Address } from "viem";
 import { Button } from "@/components/ui/button";
-import { copy, type Lang } from "@/lib/kai/copy";
+import { copy, localeOf, type Lang } from "@/lib/kai/copy";
 import {
   MIN_USD,
   ROUNDS,
@@ -46,7 +46,7 @@ const ASSETS: PayAsset[] = ["USDG", "ETH", "USDT", "USDC"];
 
 export function BuyPanel({ lang }: Props) {
   const t = copy[lang];
-  const locale = lang === "tr" ? "tr-TR" : "en-US";
+  const locale = localeOf(lang);
   const [account, setAccount] = useState<Address | null>(null);
   const [asset, setAsset] = useState<PayAsset>("USDG");
   const [busy, setBusy] = useState(false);
@@ -251,6 +251,7 @@ export function BuyPanel({ lang }: Props) {
             {t.kicker}
           </p>
           <h2 className="mt-1 font-display text-2xl text-fg">{t.buyCta}</h2>
+          <p className="mt-1 text-[11px] text-subtle">{t.chainBadge}</p>
         </div>
         <span
           className={
