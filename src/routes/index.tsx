@@ -12,6 +12,8 @@ import {
   priceUsd,
 } from "@/lib/kai/economics";
 import { KAI_TOKEN, PRESALE, USDG, explorerToken, shortAddr } from "@/lib/kai/chain";
+import { proofs } from "@/lib/kai/whitepaper";
+import { readTokenHasNoOwner, readTokenSupply } from "@/lib/kai/wallet";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -240,6 +242,8 @@ function Home() {
         </div>
       </section>
 
+      <OnchainProofs lang={lang} locale={locale} />
+
       <section className="border-t border-border py-14">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="font-display text-3xl text-fg">{t.how}</h2>
@@ -285,5 +289,75 @@ function Home() {
 
       <SiteFooter lang={lang} />
     </div>
+  );
+}
+
+function OnchainProofs({ lang, locale }: { lang: Lang; locale: string }) {
+  const p = proofs[lang];
+  const [supply, setSupply] = useState<bigint | null>(null);
+  const [noOwner, setNoOwner] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    void Promise.all([readTokenSupply(), readTokenHasNoOwner()]).then(([s, o]) => {
+      if (!alive) return;
+      setSupply(s);
+      setNoOwner(o);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const supplyWhole = supply !== null ? supply / 10n ** 18n : null;
+  const supplyOk = supplyWhole === KAI_SUPPLY;
+
+  return (
+    <section id="kanit" className="border-t border-border py-14">
+      <div className="mx-auto max-w-5xl px-4">
+        <h2 className="font-display text-3xl text-fg">{p.title}</h2>
+        <p className="mt-3 max-w-[62ch] text-base leading-relaxed text-muted">{p.lead}</p>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <article className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
+            <p className="text-xs uppercase tracking-[0.12em] text-subtle">{p.liveSupply}</p>
+            <p className="mt-2 font-mono text-lg tabular-nums text-fg">
+              {supplyWhole === null ? "…" : `${formatInt(supplyWhole, locale)} KAI`}
+            </p>
+            <p className="mt-1 text-sm text-ok">{supplyOk ? "totalSupply() = 1 618 033 988" : ""}</p>
+          </article>
+          <article className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
+            <p className="text-xs uppercase tracking-[0.12em] text-subtle">{p.liveOwner}</p>
+            <p className="mt-2 text-base text-fg">
+              {noOwner === null ? "…" : noOwner ? p.liveOwnerNo : p.liveOwnerYes}
+            </p>
+          </article>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          {p.items.map((item) => (
+            <article key={item.t} className="rounded-[var(--radius-lg)] border border-border bg-elevated p-5">
+              <h3 className="font-medium text-fg">{item.t}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{item.b}</p>
+            </article>
+          ))}
+        </div>
+        <article className="mt-4 rounded-[var(--radius-lg)] border border-accent/35 bg-elevated p-5">
+          <h3 className="font-medium text-fg">{p.teamT}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{p.team}</p>
+        </article>
+        <p className="mt-6 text-sm text-subtle">{p.verify}</p>
+        <ul className="mt-2 space-y-1 font-mono text-xs text-muted">
+          <li>
+            <a className="hover:text-fg" href={p.tokenLink}>
+              KAI {shortAddr(KAI_TOKEN)}
+            </a>
+          </li>
+          <li>
+            <a className="hover:text-fg" href={p.saleLink}>
+              Presale {shortAddr(PRESALE)}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
   );
 }

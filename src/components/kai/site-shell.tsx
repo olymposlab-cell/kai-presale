@@ -1,4 +1,5 @@
 import { FUTURE_NAV, copy, LANGS, type Lang } from "@/lib/kai/copy";
+import { proofs } from "@/lib/kai/whitepaper";
 import { Button } from "@/components/ui/button";
 
 export function SiteHeader({
@@ -28,6 +29,9 @@ export function SiteHeader({
           </a>
           <a href="/whitepaper" className="hover:text-fg">
             {t.wpNav}
+          </a>
+          <a href="/#kanit" className="hover:text-fg">
+            {proofs[lang].nav}
           </a>
           <a href="#gelecek" className="hover:text-fg">
             {FUTURE_NAV[lang]}

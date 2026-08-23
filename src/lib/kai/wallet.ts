@@ -11,6 +11,7 @@ import {
 } from "viem";
 import {
   ERC20_ABI,
+  KAI_TOKEN,
   PRESALE,
   PRESALE_ABI,
   ROBINHOOD_CHAIN_ID,
@@ -205,6 +206,23 @@ export function walletClient(eth: EthereumProvider, account: Address, chain: Cha
     chain,
     transport: custom(eth),
   });
+}
+
+export async function readTokenSupply() {
+  return publicClient.readContract({
+    address: KAI_TOKEN,
+    abi: ERC20_ABI,
+    functionName: "totalSupply",
+  });
+}
+
+export async function readTokenHasNoOwner() {
+  try {
+    await publicClient.call({ to: KAI_TOKEN, data: "0x8da5cb5b" as Hex });
+    return false;
+  } catch {
+    return true;
+  }
 }
 
 export async function readSaleOpened() {

@@ -1,4 +1,236 @@
 import type { Lang } from "./copy";
+import { KAI_TOKEN, PRESALE, explorerToken } from "./chain";
+
+export type ProofCopy = {
+  nav: string;
+  title: string;
+  lead: string;
+  liveSupply: string;
+  liveOwner: string;
+  liveOwnerYes: string;
+  liveOwnerNo: string;
+  items: { t: string; b: string }[];
+  teamT: string;
+  team: string;
+  verify: string;
+  tokenLink: string;
+  saleLink: string;
+};
+
+const EX_TOKEN = explorerToken(KAI_TOKEN);
+const EX_SALE = explorerToken(PRESALE);
+
+export const proofs: Record<Lang, ProofCopy> = {
+  tr: {
+    nav: "Kanıt",
+    title: "Zincirde kilitli olanlar",
+    lead:
+      "Aşağıdakiler slayt değil. Token kontratı doğrulanmış, yalın ERC-20. Mint, owner, pause, vergi, kara liste, proxy yok. Davranışı dağıtımdan sonra değiştirecek adres yoktur.",
+    liveSupply: "Zincirdeki toplam arz",
+    liveOwner: "owner()",
+    liveOwnerYes: "Owner var — bu beklenmiyor.",
+    liveOwnerNo: "Revert. Owner yok.",
+    items: [
+      {
+        t: "Arz artmaz",
+        b: "Constructor bir kez mint etti. mint() fonksiyonu yok. totalSupply sabittir: 1.618.033.988 KAI. Yeni token basılamaz.",
+      },
+      {
+        t: "İsim değişmez",
+        b: "Ad Kai, sembol KAI. setName yok. Kontrat yazıldı; bu alanlar sonradan güncellenemez.",
+      },
+      {
+        t: "Owner / admin yok",
+        b: "Token’da Ownable yok. owner() çağrısı revert eder. Pause, blacklist, vergi yok.",
+      },
+      {
+        t: "Proxy yok",
+        b: "Yükseltilebilir vekil değil. Kaynak kilitli. Mantığı sonradan değiştirmenin yolu yok.",
+      },
+      {
+        t: "Ön satış hazinesi kilitli",
+        b: "paymentToken ve treasury immutable. Alım kaydı (purchasedByWallet) düşürülemez. Satış bir kez açılır, kapanış geri alınamaz.",
+      },
+    ],
+    teamT: "Ekip — TGE’de %0",
+    team:
+      "Ekip tahsisi arzın %5’idir, sıfır değildir. TGE’de ekibe %0 açılır: 12 ay bekler, 60 ayda doğrusal gelir. Bu vesting takvimi; token kontratı mint ile ekibe ekstra basamaz.",
+    verify: "Kendin doğrula",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  en: {
+    nav: "Proofs",
+    title: "Locked on-chain",
+    lead:
+      "These are not slides. The token is a verified plain ERC-20. No mint, owner, pause, tax, blacklist, or proxy. After deploy, no address can change its behaviour.",
+    liveSupply: "On-chain total supply",
+    liveOwner: "owner()",
+    liveOwnerYes: "An owner exists — that is not expected.",
+    liveOwnerNo: "Reverts. There is no owner.",
+    items: [
+      {
+        t: "Supply cannot increase",
+        b: "The constructor minted once. There is no mint(). totalSupply is fixed at 1,618,033,988 KAI. No further tokens can be created.",
+      },
+      {
+        t: "The name cannot change",
+        b: "Name Kai, symbol KAI. No setName. The contract is written; those fields cannot be updated.",
+      },
+      {
+        t: "No owner / admin",
+        b: "The token is not Ownable. owner() reverts. No pause, blacklist, or tax.",
+      },
+      {
+        t: "No proxy",
+        b: "Not an upgradeable proxy. Source is locked. There is no path to change the logic later.",
+      },
+      {
+        t: "Presale treasury is locked",
+        b: "paymentToken and treasury are immutable. purchasedByWallet cannot decrease. Sale opens once; closing cannot be undone.",
+      },
+    ],
+    teamT: "Team — 0% at TGE",
+    team:
+      "Team allocation is 5% of supply, not zero. At TGE the team receives 0%: 12-month cliff, then 60 months linear. Vesting policy — the token contract cannot mint extra to the team.",
+    verify: "Verify yourself",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  de: {
+    nav: "Nachweis",
+    title: "On-chain gesperrt",
+    lead:
+      "Kein Slide. Verifiziertes ERC-20. Kein Mint, Owner, Pause, Steuer, Proxy. Nach dem Deploy ändert niemand das Verhalten.",
+    liveSupply: "On-chain-Gesamtangebot",
+    liveOwner: "owner()",
+    liveOwnerYes: "Owner vorhanden — unerwartet.",
+    liveOwnerNo: "Revert. Kein Owner.",
+    items: [
+      { t: "Angebot steigt nicht", b: "Einmaliger Mint im Constructor. Kein mint(). 1.618.033.988 KAI fest." },
+      { t: "Name ändert sich nicht", b: "Kai / KAI. Kein setName." },
+      { t: "Kein Owner", b: "Kein Ownable. owner() revert. Kein Pause/Blacklist." },
+      { t: "Kein Proxy", b: "Nicht upgradebar. Logik unveränderbar." },
+      { t: "Treasury fix", b: "paymentToken und treasury immutable. Käufe nicht löschbar." },
+    ],
+    teamT: "Team — 0 % beim TGE",
+    team: "Team-Anteil 5 %, nicht null. Beim TGE 0 %: 12 Monate Cliff, 60 Monate linear. Kein Extra-Mint.",
+    verify: "Selbst prüfen",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  es: {
+    nav: "Pruebas",
+    title: "Bloqueado en cadena",
+    lead:
+      "No es una diapositiva. ERC-20 verificado. Sin mint, owner, pausa, impuesto ni proxy.",
+    liveSupply: "Oferta total en cadena",
+    liveOwner: "owner()",
+    liveOwnerYes: "Hay owner — no se espera.",
+    liveOwnerNo: "Revert. No hay owner.",
+    items: [
+      { t: "La oferta no sube", b: "Mint único en el constructor. Sin mint(). 1.618.033.988 KAI fijos." },
+      { t: "El nombre no cambia", b: "Kai / KAI. No hay setName." },
+      { t: "Sin owner", b: "No es Ownable. owner() revierte." },
+      { t: "Sin proxy", b: "No actualizable." },
+      { t: "Tesorería fija", b: "paymentToken y treasury inmutables. Compras no se borran." },
+    ],
+    teamT: "Equipo — 0 % en el TGE",
+    team: "Asignación del equipo 5 %, no cero. En el TGE 0 %: cliff 12 meses, lineal 60. Sin mint extra.",
+    verify: "Verifícalo",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  fr: {
+    nav: "Preuves",
+    title: "Verrouillé on-chain",
+    lead:
+      "Pas un slide. ERC-20 vérifié. Pas de mint, owner, pause, taxe ni proxy.",
+    liveSupply: "Offre totale on-chain",
+    liveOwner: "owner()",
+    liveOwnerYes: "Un owner existe — inattendu.",
+    liveOwnerNo: "Revert. Pas d’owner.",
+    items: [
+      { t: "L’offre n’augmente pas", b: "Mint unique au constructeur. Pas de mint(). 1 618 033 988 KAI fixes." },
+      { t: "Le nom ne change pas", b: "Kai / KAI. Pas de setName." },
+      { t: "Pas d’owner", b: "Pas Ownable. owner() revert." },
+      { t: "Pas de proxy", b: "Non upgradeable." },
+      { t: "Trésorerie figée", b: "paymentToken et treasury immuables. Achats indélébiles." },
+    ],
+    teamT: "Équipe — 0 % au TGE",
+    team: "Allocation équipe 5 %, pas zéro. Au TGE 0 % : cliff 12 mois, linéaire 60. Pas de mint extra.",
+    verify: "Vérifiez",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  it: {
+    nav: "Prove",
+    title: "Bloccato on-chain",
+    lead:
+      "Non è una slide. ERC-20 verificato. Niente mint, owner, pause, tassa, proxy.",
+    liveSupply: "Offerta totale on-chain",
+    liveOwner: "owner()",
+    liveOwnerYes: "C’è un owner — inatteso.",
+    liveOwnerNo: "Revert. Nessun owner.",
+    items: [
+      { t: "L’offerta non cresce", b: "Mint unico nel constructor. Niente mint(). 1.618.033.988 KAI fissi." },
+      { t: "Il nome non cambia", b: "Kai / KAI. Niente setName." },
+      { t: "Nessun owner", b: "Non Ownable. owner() revert." },
+      { t: "Nessun proxy", b: "Non upgradeabile." },
+      { t: "Tesoreria fissa", b: "paymentToken e treasury immutabili. Acquisti non cancellabili." },
+    ],
+    teamT: "Team — 0 % al TGE",
+    team: "Allocazione team 5 %, non zero. Al TGE 0 %: cliff 12 mesi, lineare 60. Nessun mint extra.",
+    verify: "Verifica",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  pt: {
+    nav: "Provas",
+    title: "Travado on-chain",
+    lead:
+      "Não é slide. ERC-20 verificado. Sem mint, owner, pause, taxa ou proxy.",
+    liveSupply: "Oferta total on-chain",
+    liveOwner: "owner()",
+    liveOwnerYes: "Há owner — inesperado.",
+    liveOwnerNo: "Revert. Sem owner.",
+    items: [
+      { t: "A oferta não sobe", b: "Mint único no constructor. Sem mint(). 1.618.033.988 KAI fixos." },
+      { t: "O nome não muda", b: "Kai / KAI. Sem setName." },
+      { t: "Sem owner", b: "Não é Ownable. owner() reverte." },
+      { t: "Sem proxy", b: "Não atualizável." },
+      { t: "Tesouraria fixa", b: "paymentToken e treasury imutáveis. Compras não apagam." },
+    ],
+    teamT: "Equipe — 0 % no TGE",
+    team: "Alocação da equipe 5 %, não zero. No TGE 0 %: cliff 12 meses, linear 60. Sem mint extra.",
+    verify: "Verifique",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+  ru: {
+    nav: "Доказательства",
+    title: "Зафиксировано в сети",
+    lead:
+      "Это не слайд. Проверенный ERC-20. Нет mint, owner, pause, налога, proxy.",
+    liveSupply: "Эмиссия в сети",
+    liveOwner: "owner()",
+    liveOwnerYes: "Owner есть — так не должно быть.",
+    liveOwnerNo: "Revert. Owner нет.",
+    items: [
+      { t: "Эмиссия не растёт", b: "Единственный mint в constructor. Нет mint(). 1 618 033 988 KAI фиксированы." },
+      { t: "Имя не меняется", b: "Kai / KAI. Нет setName." },
+      { t: "Нет owner", b: "Не Ownable. owner() revert." },
+      { t: "Нет proxy", b: "Не обновляемый." },
+      { t: "Казначейство зафиксировано", b: "paymentToken и treasury immutable. Покупки не стираются." },
+    ],
+    teamT: "Команда — 0 % на TGE",
+    team: "Доля команды 5 %, не ноль. На TGE 0 %: клифф 12 месяцев, линейно 60. Без дополнительного mint.",
+    verify: "Проверьте сами",
+    tokenLink: EX_TOKEN,
+    saleLink: EX_SALE,
+  },
+};
+
 
 export type Wp = {
   title: string;

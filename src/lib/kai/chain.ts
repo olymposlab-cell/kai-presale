@@ -98,6 +98,27 @@ export const ERC20_ABI = [
     inputs: [],
     outputs: [{ type: "uint8" }],
   },
+  {
+    type: "function",
+    name: "totalSupply",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "name",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "string" }],
+  },
+  {
+    type: "function",
+    name: "symbol",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "string" }],
+  },
 ] as const satisfies Abi;
 
 export function shortAddr(a: string) {
