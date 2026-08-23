@@ -26,8 +26,8 @@ export function SiteHeader({
           <a href="#al" className="hover:text-fg">
             {t.buyCta}
           </a>
-          <a href="#genel" className="hover:text-fg">
-            {t.overview}
+          <a href="/whitepaper" className="hover:text-fg">
+            {t.wpNav}
           </a>
           <a href="#gelecek" className="hover:text-fg">
             {FUTURE_NAV[lang]}

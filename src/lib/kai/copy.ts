@@ -40,6 +40,9 @@ type Dict = {
   heroBody: string;
   chainBadge: string;
   chainHint: string;
+  utilBadge: string;
+  utilBanner: string;
+  wpNav: string;
   contrastTitle: string;
   contrastThemT: string;
   contrastThem: string;
@@ -230,6 +233,10 @@ export const copy: Record<Lang, Dict> = {
       "Diğer uygulamalar yüz fotoğrafını kaydırır: yüz kişi, bir bakış, bir karar. KindredHQ’da kimse birbirini görmez. Kai ile sohbet edersin; karakter, dil, mizah ve niyet görünür. Eşleşme ruhtan başlar. Ürün yayında — fotoğrafsız, her seferinde tek kişi.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI, Robinhood Chain üzerindeki kullanım tokenıdır. Gaz ETH, ödeme USDG.",
+    utilBadge: "Utility token",
+    utilBanner:
+      "$KAI bir utility (kullanım) tokendir. Hisse değildir, borç değildir, kâr payı yoktur. Kai kredileri, premium katman ve ekosistem kapıları için yakıttır.",
+    wpNav: "Whitepaper",
     contrastTitle: "Neden burası farklı",
     contrastThemT: "Klasik uygulamalar",
     contrastThem:
@@ -334,6 +341,10 @@ export const copy: Record<Lang, Dict> = {
       "Other apps swipe faces: a hundred photos, one glance, a verdict. On KindredHQ nobody sees anybody first. You talk with Kai. Character, humour, intent come before a picture. The product is live — photo-free, one person at a time.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI is the utility token on Robinhood Chain. Gas is ETH. Payment is USDG.",
+    utilBadge: "Utility token",
+    utilBanner:
+      "$KAI is a utility token. Not equity, not debt, no profit share. It is fuel for Kai credits, the premium layer, and ecosystem access.",
+    wpNav: "Whitepaper",
     contrastTitle: "Why this is different",
     contrastThemT: "Typical apps",
     contrastThem:
@@ -438,6 +449,10 @@ export const copy: Record<Lang, Dict> = {
       "Andere Apps wischen Gesichter: hundert Fotos, ein Blick, ein Urteil. Bei KindredHQ sieht zuerst niemand niemanden. Du sprichst mit Kai. Charakter vor Bild. Das Produkt ist live — ohne Foto, eine Person nach der anderen.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI ist der Utility-Token auf Robinhood Chain. Gas ist ETH, Zahlung USDG.",
+    utilBadge: "Utility-Token",
+    utilBanner:
+      "$KAI ist ein Utility-Token. Keine Aktie, keine Schuld, keine Gewinnbeteiligung. Treibstoff für Kai-Credits, Premium und Ökosystemzugang.",
+    wpNav: "Whitepaper",
     contrastTitle: "Warum das anders ist",
     contrastThemT: "Übliche Apps",
     contrastThem: "Profilfotos, Swipe, hundert Gesichter. Aussehen zuerst, Gespräch zuletzt.",
@@ -529,6 +544,10 @@ export const copy: Record<Lang, Dict> = {
       "Otras apps deslizan caras: cien fotos, una mirada, un veredicto. En KindredHQ nadie se ve primero. Hablas con Kai. El carácter va antes que la imagen. El producto está en vivo: sin foto, una persona cada vez.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI es el token de utilidad en Robinhood Chain. Gas ETH, pago USDG.",
+    utilBadge: "Token de utilidad",
+    utilBanner:
+      "$KAI es un token de utilidad. No es capital ni deuda, no hay reparto de beneficios. Combustible para créditos Kai, premium y acceso al ecosistema.",
+    wpNav: "Whitepaper",
     contrastTitle: "Por qué es distinto",
     contrastThemT: "Apps típicas",
     contrastThem: "Fotos, swipe, cien caras. Primero el aspecto; la charla al final.",
@@ -620,6 +639,10 @@ export const copy: Record<Lang, Dict> = {
       "Les autres apps glissent des visages : cent photos, un regard, un verdict. Sur KindredHQ personne ne se voit d’abord. Vous parlez avec Kai. Le caractère avant l’image. Le produit est en ligne — sans photo, une personne à la fois.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI est le jeton d’utilité sur Robinhood Chain. Gaz ETH, paiement USDG.",
+    utilBadge: "Jeton d’utilité",
+    utilBanner:
+      "$KAI est un jeton d’utilité. Pas d’action, pas de dette, pas de dividende. Carburant pour les crédits Kai, le premium et l’accès à l’écosystème.",
+    wpNav: "Whitepaper",
     contrastTitle: "Pourquoi c’est différent",
     contrastThemT: "Apps habituelles",
     contrastThem: "Photos, swipe, cent visages. L’apparence d’abord, la parole ensuite.",
@@ -711,6 +734,10 @@ export const copy: Record<Lang, Dict> = {
       "Le altre app slittano volti: cento foto, uno sguardo, un verdetto. Su KindredHQ nessuno si vede prima. Parli con Kai. Il carattere prima dell’immagine. Il prodotto è live — senza foto, una persona alla volta.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI è il token di utilità su Robinhood Chain. Gas ETH, pagamento USDG.",
+    utilBadge: "Token di utilità",
+    utilBanner:
+      "$KAI è un token di utilità. Non è equity, non è debito, nessun utile. Carburante per crediti Kai, premium e accesso all’ecosistema.",
+    wpNav: "Whitepaper",
     contrastTitle: "Perché è diverso",
     contrastThemT: "App tipiche",
     contrastThem: "Foto, swipe, cento volti. Prima l’aspetto, poi la chiacchiera.",
@@ -802,6 +829,10 @@ export const copy: Record<Lang, Dict> = {
       "Outros apps deslizam rostos: cem fotos, um olhar, um veredito. Na KindredHQ ninguém se vê primeiro. Você fala com o Kai. Caráter antes da imagem. O produto está no ar — sem foto, uma pessoa de cada vez.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI é o token de utilidade na Robinhood Chain. Gás ETH, pagamento USDG.",
+    utilBadge: "Token de utilidade",
+    utilBanner:
+      "$KAI é um token de utilidade. Não é equity, não é dívida, sem lucro. Combustível para créditos Kai, premium e acesso ao ecossistema.",
+    wpNav: "Whitepaper",
     contrastTitle: "Por que é diferente",
     contrastThemT: "Apps típicos",
     contrastThem: "Fotos, swipe, cem rostos. Primeiro a aparência; a conversa por último.",
@@ -893,6 +924,10 @@ export const copy: Record<Lang, Dict> = {
       "Другие приложения листают лица: сто фото, один взгляд, приговор. В KindredHQ сначала никто никого не видит. Вы говорите с Kai. Характер раньше картинки. Продукт в эфире — без фото, один человек за раз.",
     chainBadge: "Robinhood Chain · 4663",
     chainHint: "KAI — утилити-токен в сети Robinhood Chain. Газ ETH, оплата USDG.",
+    utilBadge: "Утилити-токен",
+    utilBanner:
+      "$KAI — утилити-токен. Это не доля, не долг и не дивиденд. Топливо для кредитов Kai, премиума и доступа к экосистеме.",
+    wpNav: "Whitepaper",
     contrastTitle: "Почему здесь иначе",
     contrastThemT: "Обычные приложения",
     contrastThem: "Фото, свайп, сто лиц. Сначала внешность, разговор в конце.",

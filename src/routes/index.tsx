@@ -51,6 +51,15 @@ function Home() {
           </h1>
           <p className="mt-4 max-w-[38ch] font-display text-xl leading-snug text-fg">{t.heroTagline}</p>
           <p className="mt-4 max-w-[48ch] text-base leading-relaxed text-muted sm:text-lg">{t.heroBody}</p>
+          <p className="mt-5 inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-accent">
+            {t.utilBadge}
+          </p>
+          <p className="mt-3 max-w-[48ch] text-sm leading-relaxed text-muted">{t.utilBanner}</p>
+          <p className="mt-2">
+            <a href="/whitepaper" className="text-sm text-accent hover:underline">
+              {t.wpNav} →
+            </a>
+          </p>
 
           <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {[
