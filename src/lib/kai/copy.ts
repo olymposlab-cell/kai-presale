@@ -3,7 +3,6 @@ export const LANGS = [
   { id: "de", native: "Deutsch", locale: "de-DE" },
   { id: "es", native: "Español", locale: "es-ES" },
   { id: "fr", native: "Français", locale: "fr-FR" },
-  { id: "tr", native: "Türkçe", locale: "tr-TR" },
   { id: "it", native: "Italiano", locale: "it-IT" },
   { id: "pt", native: "Português", locale: "pt-BR" },
   { id: "ru", native: "Русский", locale: "ru-RU" },
@@ -23,7 +22,8 @@ export function isLang(v: string): v is Lang {
 export function detectLang(): Lang {
   if (typeof navigator === "undefined") return "en";
   const locked = localStorage.getItem("kai-lang-user");
-  if (locked && isLang(locked)) return locked;
+  if (locked === "tr") localStorage.removeItem("kai-lang-user");
+  else if (locked && isLang(locked)) return locked;
   const codes = [...(navigator.languages ?? []), navigator.language].filter(Boolean);
   for (const code of codes) {
     const short = code.slice(0, 2).toLowerCase();
@@ -225,115 +225,6 @@ function dict(lang: Lang, extra: Omit<Dict, keyof typeof buyShared extends infer
 }
 
 export const copy: Record<Lang, Dict> = {
-  tr: dict("tr", {
-    brand: "KindredHQ",
-    kicker: "KAI ön satış",
-    heroTitle: "Yüzler değil, ruhlar tanışsın.",
-    heroTagline: "Karşındakinin fotoğrafına değil, konuşmasına aşık ol.",
-    heroBody:
-      "Diğer uygulamalar yüz fotoğrafını kaydırır: yüz kişi, bir bakış, bir karar. KindredHQ’da kimse birbirini görmez. Kai ile sohbet edersin; karakter, dil, mizah ve niyet görünür. Eşleşme ruhtan başlar. Ürün yayında — fotoğrafsız, her seferinde tek kişi.",
-    chainBadge: "Robinhood Chain · 4663",
-    chainHint: "KAI, Robinhood Chain üzerindeki kullanım tokenıdır. Gaz ETH, ödeme USDG.",
-    utilBadge: "Utility token",
-    utilBanner:
-      "$KAI bir utility (kullanım) tokendir. Hisse değildir, borç değildir, kâr payı yoktur. Kai kredileri, premium katman ve ekosistem kapıları için yakıttır.",
-    wpNav: "Whitepaper",
-    vestNav: "Hak ediş",
-    contrastTitle: "Neden burası farklı",
-    contrastThemT: "Klasik uygulamalar",
-    contrastThem:
-      "Profil fotoğrafı, kaydırma, 100 yüz. İnsan önce görünüme bakıyor; konuşma en sona kalıyor. Çoğu ilişki bir bakışta bitiyor.",
-    contrastUsT: "KindredHQ",
-    contrastUs:
-      "Önce sohbet. Kai seni tanır, kime neden uyduğunu gerekçesiyle söyler. Yüz sonra gelir — istersen. Aşık olduğun şey konuşma ve karakterdir.",
-    whatHq: "KindredHQ nedir?",
-    whatHqBody:
-      "Yapay zeka katmanlı, fotoğrafsız tanışma ürünü. Liste yok, kaydırma yok. Amaç: insanı görünüşle değil, kim olduğuyla buluşturmak.",
-    whatKai: "Kai kim?",
-    whatKaiBody:
-      "KindredHQ’nun kendi yapay zekası. Anket değil, sohbet. Seni dinler, haritanı çıkarır, doğru kişiye gerekçeyle götürür. Plan: Kai’yi bağımsız bir zeka katmanı olarak büyütmek — eşleşmeden ilişkiye, oradan yaşama.",
-    whyToken: "$KAI ne işe yarar?",
-    whyTokenBody:
-      "Kai’yi ve etrafındaki hizmetleri çalıştıran kullanım tokenı. Krediler, premium katman, ileride sağlık ve danışmanlık erişimi. Hisse değildir; ürünü kullanmanın yakıtıdır.",
-    futureTitle: "Burası bir tanışma uygulamasıyla bitmiyor",
-    futureLead:
-      "Yapay zeka her şeyi dönüştürüyor. KindredHQ’nun yolu eşleşmeden sonra da devam ediyor: ilişki, zihin, beden. Kimse Kai’nin on yıl sonra nerede olacağını kesin söyleyemez — ama yön net: insanı anlayan bir zeka.",
-    futHealthT: "Sağlık katmanı",
-    futHealth:
-      "İlerleyen aşamada profesyonel hekimler ve uzmanlar online muayene ve yönlendirme için bağlanacak. Kai, şikâyeti dinleyip seni doğru uzmana götürmeyi öğrenir. Hafif ön değerlendirme Kai’de; teşhis ve tedavi insanda.",
-    futCareT: "İlişki ve zihin",
-    futCare:
-      "Birçok evli çift yüz yüze terapiye çekiniyor. Online, eşiyle veya yalnız, psikiyatrist ve ilişki danışmanına ulaşmak daha kolay. Kai utancı değil, ihtiyacı okur; doğru kapıyı açar.",
-    futKaiT: "Kendi zekası: Kai",
-    futKai:
-      "Kai bir sohbet botu olarak kalmayacak. KindredHQ kendi modelini — Kai adıyla — ürünün omurgası yapmayı planlıyor. Eşleşme, ilişki, sağlık yönlendirmesi aynı zekâda birikir. İzin senin; veri vitrin değil.",
-    whyJoinTitle: "Neden şimdi ön satışa katılmalısın",
-    whyJoinLead:
-      "Sayılar bir tablo. Asıl mesele: yayındaki bir ürünün, fotoğrafsız eşleşmenin ve büyüyen bir zekânın yakıtına erken girmek.",
-    join1T: "Ürün spekülasyon değil, çalışıyor",
-    join1:
-      "KindredHQ yayında. Kai sohbet ediyor, eşleşme dönüyor. Token, boş bir slayta değil; kullanılan bir katmana bağlanıyor.",
-    join2T: "Erken tur, net fiyat",
-    join2:
-      "İlk tur 0,014 $. Dört tur, her birinin tavanı kontratta. Erken katılan, sonraki turlardan önce aynı yakıta girer.",
-    join3T: "Kai büyüdükçe kullanım büyür",
-    join3:
-      "Krediler, premium, ileride danışmanlık ve sağlık yönlendirmesi. $KAI bu kapıların anahtarı olarak tasarlandı. Getiri vaadi yok — ürün büyürse kullanım büyür.",
-    utilityTitle: "Tokenın yeri",
-    utilityLead: "Sabit arz. Ürünü döndürmek için var; hayali bir getiri için değil.",
-    util1: "Kai Kredileri — sohbet ve eşleşme.",
-    util2: "Premium Kai — daha derin uyum.",
-    util3: "Ekosistem — davet, katkı, ortaklar.",
-    util4: "Yarın: danışmanlık ve sağlık erişimi.",
-    proofTitle: "Bugün gerçek olan",
-    proof1: "Platform yayında",
-    proof2: "Kai sohbeti canlı",
-    proof3: "Eşleştirme çalışıyor",
-    proof4: "Yüz ve ses kademeli açılır",
-    roadmap: "Yol haritası",
-    rmNow: "Şimdi — KAI Match",
-    rmNowD: "Sohbetle tanıma. Tek eşleşme. Fotoğraf yok.",
-    rmNext: "Sırada — krediler ve Kai",
-    rmNextD: "Kai Kredileri, mobil, Kai’nin zekâ katmanının derinleşmesi.",
-    rmThen: "Ardından — KAI Relationship",
-    rmThenD: "İlişki içgörüsü, iletişim, çiftlere online destek.",
-    rmLater: "Sonra — sağlık ve yaşam",
-    rmLaterD: "Uzman yönlendirme, online danışmanlık, Kai Self / Life.",
-    buyCta: "Ön satışa katıl",
-    rounds: "Turlar",
-    roundsLead: "Dört tur. Fiyat turdan tura yükselir; her dilim kendi fiyatından yazılır.",
-    tokenomics: "Dağılım",
-    supply: "Toplam arz",
-    supplyLine: "Arz sabittir. Ön satış tavanı kontrata kilitlidir.",
-    kpiSupply: "Arz",
-    kpiPresale: "Ön satış",
-    kpiRounds: "Tur",
-    kpiPrice: "İlk fiyat",
-    how: "Nasıl katılırım",
-    step1: "Cüzdanını bağla",
-    step1d: "MetaMask. Ağ: Robinhood Chain.",
-    step2: "USDG ile al",
-    step2d: "Robinhood’da USDG varsa doğrudan al. ETH varsa önce Takas ile USDG yap.",
-    step3: "Miktarı yaz, imzala",
-    step3d: "Onay ve alım senin cüzdanında. En az 1 $.",
-    product: "KindredHQ.io",
-    open: "Satış açık",
-    pending: "Bekleniyor",
-    everyone: "Herkes katılabilir",
-    tge: "TGE’de %15 açılır, kalanı 18 ayda doğrusal gelir.",
-    teamVest: "Ekip: TGE’de %0, 12 ay bekler, 60 ay doğrusal.",
-    contracts: "Kontratlar",
-    overview: "Neden Kindred",
-    footerChain: "Robinhood Chain üzerinde.",
-    allocPresale: "Ön satış",
-    allocEco: "Ekosistem ve Kai",
-    allocTreasury: "Hazine / ürün",
-    allocLiquidity: "Likidite",
-    allocMarketing: "Pazarlama",
-    allocTeam: "Ekip",
-    allocCommunity: "Topluluk",
-    allocAdvisors: "Danışmanlar",
-  }),
   en: dict("en", {
     brand: "KindredHQ",
     kicker: "KAI presale",
@@ -1033,7 +924,6 @@ export const ALLOC_KEYS = [
 ] as const;
 
 export const FUTURE_NAV: Record<Lang, string> = {
-  tr: "Gelecek",
   en: "Future",
   de: "Zukunft",
   es: "Futuro",
@@ -1044,7 +934,6 @@ export const FUTURE_NAV: Record<Lang, string> = {
 };
 
 export const QR_CONNECT: Record<Lang, string> = {
-  tr: "QR ile bağla",
   en: "Connect with QR",
   de: "Per QR verbinden",
   es: "Conectar con QR",
@@ -1056,10 +945,6 @@ export const QR_CONNECT: Record<Lang, string> = {
 
 
 export const MOBILE_WALLET: Record<Lang, { hint: string; open: string }> = {
-  tr: {
-    hint: "Safari’de uzantı yok. QR ile bağla — MetaMask, Trust Wallet, Rainbow karekodu okur. Ya da uygulamadaki tarayıcıdan siteyi aç.",
-    open: "MetaMask uygulamasında aç",
-  },
   en: {
     hint: "Mobile Safari/Chrome has no wallet. Open the MetaMask app, use its built-in browser, paste this site.",
     open: "Open in MetaMask app",

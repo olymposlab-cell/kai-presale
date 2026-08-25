@@ -21,44 +21,6 @@ const EX_TOKEN = explorerToken(KAI_TOKEN);
 const EX_SALE = explorerToken(PRESALE);
 
 export const proofs: Record<Lang, ProofCopy> = {
-  tr: {
-    nav: "Kanıt",
-    title: "Zincirde kilitli olanlar",
-    lead:
-      "Token, doğrulanmış yalın bir ERC-20’dir. Mint, owner, pause, vergi, kara liste ve yükseltilebilir vekil yoktur. Dağıtımdan sonra davranış değiştirilemez.",
-    liveSupply: "Zincirdeki toplam arz",
-    liveOwner: "owner()",
-    liveOwnerYes: "Owner mevcut.",
-    liveOwnerNo: "Owner yok.",
-    items: [
-      {
-        t: "Sabit arz",
-        b: "Genesis’te bir kez basıldı. mint() yok. Toplam arz 1.618.033.988 KAI.",
-      },
-      {
-        t: "Sabit isim",
-        b: "Ad: Kai. Sembol: KAI. İsim güncelleme fonksiyonu yok.",
-      },
-      {
-        t: "Yetkisiz token",
-        b: "Ownable yok. owner() revert eder. Pause, kara liste ve vergi yok.",
-      },
-      {
-        t: "Yükseltilemez",
-        b: "Proxy kullanılmadı. Kontrat mantığı kilitlidir.",
-      },
-      {
-        t: "Ön satış parametreleri",
-        b: "Ödeme varlığı ve hazine adresi immutable. Alım kayıtları azaltılamaz. Satış bir kez açılır; kapanış geri alınamaz.",
-      },
-    ],
-    teamT: "Ekip hak edişi",
-    team:
-      "Ekip dilimi toplam arzın %5’i. TGE’de serbest bırakılmaz. 12 aylık bekleyişin ardından 60 ayda doğrusal açılır.",
-    verify: "Kendin doğrula",
-    tokenLink: EX_TOKEN,
-    saleLink: EX_SALE,
-  },
   en: {
     nav: "Proofs",
     title: "Locked on-chain",
@@ -253,40 +215,6 @@ export type Wp = {
   close: string;
 };
 
-const tr: Wp = {
-  title: "KAI Whitepaper",
-  kicker: "KindredHQ · Utility token",
-  intro:
-    "Bu metin bir ürün kâğıdıdır. $KAI’nin KindredHQ içinde ne işe yaradığını, neden var olduğunu ve zincirde nasıl durduğunu anlatır. Getiri, listing veya fiyat vaadi yoktur.",
-  utilT: "Neden utility token",
-  util:
-    "$KAI bir kullanım tokenıdır. KindredHQ’nun çalışan ürününde — Kai sohbeti, eşleşme, ileride premium ve hizmet erişimi — harcanmak üzere tasarlandı. Token, ürünün yakıtıdır. Şirket hissesi, borç senedi veya kâr payı hakkı vermez.",
-  notT: "Ne değildir",
-  not:
-    "Yatırım sözleşmesi değildir. Temettü yoktur. Yönetim hakkı yoktur. Fiyatın yükseleceğine dair taahhüt yoktur. Satın alma, Kai ve KindredHQ katmanını kullanma niyetiyle yapılır.",
-  useT: "Bugün ve yarın ne işe yarar",
-  use: [
-    "Kai Kredileri — sohbet ve eşleşme.",
-    "Premium Kai — daha derin uyum katmanı.",
-    "Ekosistem — davet, katkı, ortak erişimi.",
-    "Yol haritası: ilişki danışmanlığı ve sağlık yönlendirmesi erişimi. Teşhis insanda kalır.",
-  ],
-  productT: "Ürün",
-  product:
-    "KindredHQ fotoğrafsız tanışma ürünüdür ve yayındadır. Diğer uygulamalar yüz kaydırır. Burada Kai ile sohbet edilir; karakter konuşmadan önce görünür. Plan: Kai’yi eşleşmeden ilişkiye ve yaşama uzanan bir zekâ katmanı yapmak.",
-  chainT: "Zincir",
-  chain:
-    "KAI bir Robinhood Chain (4663) ERC-20’sidir. Ön satış mutabakatı USDG, gaz ETH. Kontrat tavanı ve tur fiyatları zincirde kilitlidir. Allowlist yoktur; cüzdanı olan herkes katılabilir.",
-  tokT: "Arz ve dağılım",
-  tok:
-    "Toplam arz sabittir: 1.618.033.988 KAI. Satılabilir ön satış 242.705.096. Dört tur. TGE’de %15 açılır, kalanı 18 ayda doğrusal gelir. Ekip: TGE’de %0, 12 ay bekler, 60 ay doğrusal. Hazine ve ekosistem dilimleri ürünü döndürmek içindir.",
-  futureT: "Yön",
-  future:
-    "Yapay zeka her katmanı dönüştürüyor. KindredHQ eşleşmeyle bitmez: ilişki, zihin, beden. Kai adlı kendi zekânın ürün omurgası olması planlanır. İzin kullanıcıdadır; veri vitrin değildir.",
-  close:
-    "Kontratı ve ürünü kendin oku. $KAI spekülasyon aracı olarak konumlandırılmaz.",
-};
-
 const en: Wp = {
   title: "KAI Whitepaper",
   kicker: "KindredHQ · Utility token",
@@ -326,7 +254,6 @@ function fromEn(partial: Partial<Wp> & Pick<Wp, "title" | "utilT" | "notT">): Wp
 }
 
 export const whitepaper: Record<Lang, Wp> = {
-  tr,
   en,
   de: fromEn({
     title: "KAI Whitepaper",

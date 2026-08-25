@@ -3,7 +3,7 @@ import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "KindredHQ — KAI Ön Satış";
+const APP_NAME = "KindredHQ — KAI Presale";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -14,7 +14,7 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#16121d" },
       {
         name: "description",
-        content: "KAI ön satış — KindredHQ. Allowlist yok, cüzdanı olan herkes katılabilir.",
+        content: "KAI presale — KindredHQ. No allowlist. Anyone with a wallet can join.",
       },
     ],
     links: [
@@ -38,7 +38,7 @@ export const Route = createRootRoute({
     ],
   }),
   component: () => (
-    <html lang="tr" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

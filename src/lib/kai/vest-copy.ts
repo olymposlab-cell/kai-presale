@@ -36,22 +36,6 @@ const en: VestCopy = {
 
 export const vestCopy: Record<Lang, VestCopy> = {
   en,
-  tr: {
-    title: "Hak ediş",
-    lead: "Ön satış KAI’si cüzdana otomatik gelmez; çekilir. TGE’de %15, kalan 18 × 30 günde doğrusal. Cüzdanı bağla, takvimi gör.",
-    tgeWait: "TGE henüz açık değil. Çekim yok. Alımın zincirde kayıtlı.",
-    tgeOn: "TGE açık.",
-    purchased: "Satın alınan",
-    vested: "Açılan",
-    claimed: "Çekilen",
-    claimable: "Çekilebilir",
-    next: "Sonraki açılım",
-    claim: "KAI çek",
-    none: "Çekilecek miktar yok",
-    addToken: "KAI’yi cüzdana ekle",
-    schedule: "TGE’de %15 · kalan %85, 18 × 30 günde doğrusal",
-    ok: "Çekim onaylandı",
-  },
   de: { ...en, title: "Vesting", tgeWait: "TGE noch nicht aktiv. Kauf ist on-chain erfasst.", claim: "KAI abrufen" },
   es: { ...en, title: "Vesting", tgeWait: "TGE aún no activo. La compra está en cadena.", claim: "Reclamar KAI" },
   fr: { ...en, title: "Vesting", tgeWait: "TGE pas encore actif. L’achat est enregistré on-chain.", claim: "Réclamer KAI" },
