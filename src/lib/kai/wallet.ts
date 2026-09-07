@@ -10,6 +10,9 @@ import {
   type Hex,
 } from "viem";
 import {
+  AIRDROP,
+  AIRDROP_ABI,
+  AIRDROP_LIVE,
   ERC20_ABI,
   KAI_TOKEN,
   PRESALE,
@@ -304,6 +307,32 @@ export async function claimVested(eth: EthereumProvider, account: Address) {
     address: VESTING,
     abi: VESTING_ABI,
     functionName: "claim",
+    account,
+    chain: robinhood,
+  });
+  await publicClient.waitForTransactionReceipt({ hash });
+  return hash;
+}
+
+export async function readAirdropClaimed(address: Address) {
+  if (!AIRDROP_LIVE) return false;
+  return publicClient.readContract({
+    address: AIRDROP,
+    abi: AIRDROP_ABI,
+    functionName: "claimed",
+    args: [address],
+  });
+}
+
+export async function claimAirdrop(eth: EthereumProvider, account: Address, amount: bigint, proof: Hex[]) {
+  if (!AIRDROP_LIVE) throw new Error("AIRDROP_OFF");
+  await switchRobinhood(eth);
+  const wc = walletClient(eth, account);
+  const hash = await wc.writeContract({
+    address: AIRDROP,
+    abi: AIRDROP_ABI,
+    functionName: "claim",
+    args: [amount, proof],
     account,
     chain: robinhood,
   });

@@ -16,6 +16,9 @@ export const KAI_TOKEN = "0x6e4083dA6dcc81CCd229BfA123Be785db9Dd40FA" as const;
 export const USDG = "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168" as const;
 export const TREASURY = "0x5039eDfA2AC9f7D075f38395936634829e9cf8ce" as const;
 export const VESTING = "0x089fA287b118f5F9522eA664972FAac267bF2c47" as const;
+/** Set after Safe deploys contracts/KaiAirdrop.sol (owner = TREASURY). */
+export const AIRDROP = "0x0000000000000000000000000000000000000000" as const;
+export const AIRDROP_LIVE = AIRDROP !== "0x0000000000000000000000000000000000000000";
 
 export const PRESALE_ABI = [
   {
@@ -95,6 +98,27 @@ export const VESTING_ABI = [
     outputs: [{ type: "uint256" }],
   },
   { type: "function", name: "claim", stateMutability: "nonpayable", inputs: [], outputs: [] },
+] as const satisfies Abi;
+
+export const AIRDROP_ABI = [
+  { type: "function", name: "root", stateMutability: "view", inputs: [], outputs: [{ type: "bytes32" }] },
+  {
+    type: "function",
+    name: "claimed",
+    stateMutability: "view",
+    inputs: [{ type: "address" }],
+    outputs: [{ type: "bool" }],
+  },
+  {
+    type: "function",
+    name: "claim",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "amount", type: "uint256" },
+      { name: "proof", type: "bytes32[]" },
+    ],
+    outputs: [],
+  },
 ] as const satisfies Abi;
 
 export const ERC20_ABI = [

@@ -1,5 +1,5 @@
 import { copy, LANGS, type Lang } from "@/lib/kai/copy";
-import { proofs } from "@/lib/kai/whitepaper";
+import { dropCopy } from "@/lib/kai/airdrop-copy";
 import { Button } from "@/components/ui/button";
 
 export function SiteHeader({
@@ -30,8 +30,8 @@ export function SiteHeader({
           <a href="/vesting" className="whitespace-nowrap hover:text-fg">
             {t.vestNav}
           </a>
-          <a href="/#kanit" className="hover:text-fg">
-            {proofs[lang].nav}
+          <a href="/airdrop" className="hover:text-fg">
+            {dropCopy[lang].nav}
           </a>
           <a href="https://kindredhq.io" className="hover:text-fg">
             {t.product}
@@ -76,6 +76,9 @@ export function SiteFooter({ lang }: { lang: Lang }) {
           </a>
           <a className="hover:text-fg" href="/vesting">
             {t.vestNav}
+          </a>
+          <a className="hover:text-fg" href="/airdrop">
+            {dropCopy[lang].nav}
           </a>
           <a className="hover:text-fg" href="/#kanit">
             {t.tokenomics}
