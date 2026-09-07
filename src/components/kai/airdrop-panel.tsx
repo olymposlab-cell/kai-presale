@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Address } from "viem";
 import { Button } from "@/components/ui/button";
 import { AIRDROP, AIRDROP_LIVE, explorerToken, shortAddr } from "@/lib/kai/chain";
-import { airdropFor } from "@/lib/kai/airdrop-list";
+import { AIRDROP_RECIPIENTS, airdropFor } from "@/lib/kai/airdrop-list";
 import { dropCopy } from "@/lib/kai/airdrop-copy";
 import { copy, type Lang } from "@/lib/kai/copy";
 import { formatInt } from "@/lib/kai/economics";
@@ -18,6 +18,7 @@ export function AirdropPanel({ lang }: { lang: Lang }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [already, setAlready] = useState(false);
 
+  const listOpen = AIRDROP_RECIPIENTS.length > 0;
   const row = account ? airdropFor(account) : null;
 
   useEffect(() => {
@@ -67,13 +68,14 @@ export function AirdropPanel({ lang }: { lang: Lang }) {
       <p className="mt-2 text-sm leading-relaxed text-muted">{d.lead}</p>
       <p className="mt-2 text-xs text-subtle">{d.cap}</p>
 
-      {!AIRDROP_LIVE ? <p className="mt-4 text-sm text-muted">{d.wait}</p> : null}
+      {!listOpen ? <p className="mt-4 text-sm text-muted">{d.wait}</p> : null}
 
-      {!account ? (
+      {listOpen && !account ? (
         <Button className="mt-6 w-full" onClick={() => void onConnect()} disabled={busy}>
           {d.connect}
         </Button>
-      ) : (
+      ) : null}
+      {listOpen && account ? (
         <>
           <p className="mt-4 font-mono text-xs text-subtle">{shortAddr(account)}</p>
           {row ? (
@@ -90,7 +92,7 @@ export function AirdropPanel({ lang }: { lang: Lang }) {
             <p className="mt-4 text-sm text-muted">{d.none}</p>
           )}
         </>
-      )}
+      ) : null}
       {err ? <p className="mt-3 text-sm text-danger">{err}</p> : null}
       {msg ? <p className="mt-3 text-sm text-ok">{msg}</p> : null}
       {AIRDROP_LIVE ? (

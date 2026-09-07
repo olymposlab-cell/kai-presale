@@ -17,7 +17,7 @@ export const USDG = "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168" as const;
 export const TREASURY = "0x5039eDfA2AC9f7D075f38395936634829e9cf8ce" as const;
 export const VESTING = "0x089fA287b118f5F9522eA664972FAac267bF2c47" as const;
 /** Set after Safe deploys contracts/KaiAirdrop.sol (owner = TREASURY). */
-export const AIRDROP = "0x0000000000000000000000000000000000000000" as const;
+export const AIRDROP = "0x58f7A9f9120eE04AF4283a29E645084388808108" as const;
 export const AIRDROP_LIVE = AIRDROP !== "0x0000000000000000000000000000000000000000";
 
 export const PRESALE_ABI = [
